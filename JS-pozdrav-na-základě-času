@@ -1,0 +1,28 @@
+​function time() {
+
+  var body = document.getElementById("body");
+  var result = document.getElementById("result");
+  var time = new Date().getHours();
+
+  if (time < 6) {
+    result.innerHTML = "Good night";
+    body.style.color="black";
+
+  } else if (time < 9) { 
+    result.innerHTML = "Good morning"; 
+    body.style.background = "#f39c12"
+    
+  } else if (time < 17) {
+    result.innerHTML = "Good afternoon";
+    body.style.background = "#95a5a6";
+
+  } else if (time < 21) {
+    result.innerHTML = "Good evening";
+    body.style.background = "#34495e"
+
+  } else {
+    result.innerHTML = "Good night";
+    body.style.background = "black";
+  }
+
+}
