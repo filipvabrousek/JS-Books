@@ -1,5 +1,5 @@
 <h1>1st library test</h1>
-<div></div>
+<div class="K"></div>
 
 <style>
   div{
@@ -12,16 +12,14 @@ background: cornflowerblue;
 
 window.onload = function() {
 
- window.onload = function() {
+  β('.K').attr('style', 'background:#1abc9c');
 
-  β('div').attr('style', 'background:#1abc9c');
-
-  β("div").on("dblclick", function() {
-    alert("OK")
+  β(".K").on("dblclick", function() {
+    alert("I really made it !!!")
   });
 
   function β(selector) {
-    var self = {}
+    var self = {};
     self.selector = selector;
     self.element = document.querySelector(self.selector);
 
@@ -41,5 +39,4 @@ window.onload = function() {
 
   }
 }
-
 </script>
