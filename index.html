@@ -1,0 +1,34 @@
+<h1>1st library test</h1>
+<div></div>
+
+<style>
+  div{
+    height: 60px;
+    width: 60px;
+background: cornflowerblue;
+    }
+</style>
+<script>
+
+window.onload = function() {
+
+  $('div').attr('style', 'background:#1abc9c');
+
+  function $(selector) {
+    var self = {}
+    self.selector = selector;
+    self.element = document.querySelector(self.selector);
+
+    //ATTR function
+    self.attr = function(name, value) {
+      if (!value) return self.element.getAttribute(name)
+
+      self.element.setAttribute(name, value);
+      return self;
+    }
+    return self;
+  }
+
+}
+
+</script>
