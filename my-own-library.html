@@ -1,27 +1,61 @@
-<h1>1st library test</h1>
-<div class="K"></div>
+<h1 class="a">1st library test</h1>
+<div class="b"></div>
+<p class="c"><b>w</b></p>
+
+<p id="output"></p>
 
 <style>
-  div{
-    height: 60px;
-    width: 60px;
-background: cornflowerblue;
-    }
+div {
+  height: 60px;
+  width: 60px;
+  background: cornflowerblue;
+}
+
+/*I have already done: 
+width(), height(), text(), html(), attr(), on()
+*/
+
+
 </style>
+
 <script>
+  window.onload = function() {
 
-window.onload = function() {
+  β('.b').attr('style', 'background:#1abc9c');
 
-  β('.K').attr('style', 'background:#1abc9c');
-
-  β(".K").on("dblclick", function() {
-    alert("I really made it !!!")
+  β(".b").on("dblclick", function() {
+    alert("I really made it !!!");
   });
 
+  var cHTML = β('.c').html()
+  var ou = document.getElementById("output");
+  ou.innerHTML = cHTML;
+  //alert(cHTML)
+
+  //**************Library definition****************
   function β(selector) {
     var self = {};
     self.selector = selector;
     self.element = document.querySelector(self.selector);
+
+    //WIDTH and HEIGHT functions
+    self.height = function() {
+      return self.element.offsetHeight;
+    }
+
+    self.width = function() {
+      return self.element.offsetWidth;
+    }
+
+    //text function - RETURNS!! ONLY text value
+    self.text = function() {
+      return self.element.innerText;
+    }
+
+    //html function - RETURNS!! html value
+    self.html = function() {
+      return self.element.innerHTML;
+    }
 
     //ATTR function
     self.attr = function(name, value) {
