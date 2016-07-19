@@ -4,24 +4,41 @@
 
 <p id="output"></p>
 
+<mark>Test text</mark>
+
 <style>
-div {
+  div {
   height: 60px;
   width: 60px;
   background: cornflowerblue;
 }
 
-/*I have already done: 
-width(), height(), text(), html(), attr(), on()
+.t {
+  font-size: 200px;
+}
+
+
+/*methods
+
+show()
+hide()
+addClass()
+removeClass()
+width()
+height()
+text()
+html()
+attr()
+on()
 */
-
-
 </style>
 
 <script>
-  window.onload = function() {
+window.onload = function() {
 
   β('.b').attr('style', 'background:#1abc9c');
+  β('mark').addClass("t");
+  β('.c').hide();
 
   β(".b").on("dblclick", function() {
     alert("I really made it !!!");
@@ -37,6 +54,24 @@ width(), height(), text(), html(), attr(), on()
     var self = {};
     self.selector = selector;
     self.element = document.querySelector(self.selector);
+
+    //HIDE and SHOW functions
+    self.show = function() {
+      self.element.style.display = "block";
+    }
+
+    self.hide = function() {
+      self.element.style.display = "none";
+    }
+
+    //ADDCLASS and REMOVECLASS
+    self.addClass = function(className) {
+      self.element.classList.add(className);
+    }
+
+    self.removeClass = function(className) {
+      self.element.classList.remove(className)
+    }
 
     //WIDTH and HEIGHT functions
     self.height = function() {
@@ -73,4 +108,6 @@ width(), height(), text(), html(), attr(), on()
 
   }
 }
+
+
 </script>
