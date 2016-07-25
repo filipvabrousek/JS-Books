@@ -1,13 +1,12 @@
 function B(e){var t={};return t.selector=e,t.element=document.querySelector(t.selector),t.show=function(){t.element.style.display="block"},t.hide=function(){t.element.style.display="none"},t.addClass=function(e){t.element.classList.add(e)},t.removeClass=function(e){t.element.classList.remove(e)},t.height=function(){return t.element.offsetHeight},t.width=function(){return t.element.offsetWidth},t.text=function(){return t.element.innerText},t.html=function(){return t.element.innerHTML},t.val=function(){return t.element.value},t.attr=function(e,n){return n?(t.element.setAttribute(e,n),t):t.element.getAttribute(e)},t.on=function(e,n){return t.element["on"+e]=n,t},t}
-
 /*
-​show()
+show()
 hide()
 addClass()
 removeClass()
 width()
-​height()
-
+height()
+val()
 
 text()
 html()
@@ -52,6 +51,7 @@ UNCOMPILED CODE :D
     self.height = function() {
       return self.element.offsetHeight;
     }
+    
 
     self.width = function() {
       return self.element.offsetWidth;
@@ -67,6 +67,9 @@ UNCOMPILED CODE :D
       return self.element.innerHTML;
     }
 
+self.val = function(){
+ return self.element.value;
+}
     //ATTR function
     self.attr = function(name, value) {
       if (!value) return self.element.getAttribute(name)
