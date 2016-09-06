@@ -7,7 +7,9 @@ class LikeButton extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
-    this.setState({liked: !this.state.liked});
+    this.setState({
+      liked: !this.state.liked
+    });
   }
   render() {
     const text = this.state.liked ? 'liked' : 'haven\'t liked';
