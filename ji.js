@@ -21,7 +21,7 @@
  }
 
  if (!('webkitSpeechRecognition' in window)) {
-   alert("Sorry you require a browser that supports speech recognition");
+   alert("Sorry, your browser doesn´t support speech recognition.");
  } else {
    speech();
  }
