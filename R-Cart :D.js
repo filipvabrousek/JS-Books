@@ -64,7 +64,7 @@ Render the cart + items
 
 /*
 CART CLASS
-
+Switch between opened and closed state
 
 */
 var Cart = React.createClass({
