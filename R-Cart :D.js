@@ -95,7 +95,7 @@ var Cart = React.createClass({
 
 /*
 PRODUCT 
-Add the addToCart function to product when clicked
+Render the product and add the addToCart function to product when clicked
 */
 var Product = React.createClass({
   addToCart: function() {
