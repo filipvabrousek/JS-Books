@@ -5,6 +5,7 @@ http://codepen.io/filipvabrousek/pen/QGZWmW?editors=0010
 
 */
 
+
 /*-----------------------------------------------H-------------------------------------*/
 function h(type, props) {
   for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
@@ -179,14 +180,12 @@ function updateElement($parent, newNode, oldNode) {
 
 
 
-var n = h('h1', {className: 'item', onClick: function onClick() { return alert('hi!');}}, 'item 1');
-
+var el = h('h1', {className: 'item', onClick: function onClick() { return alert('It works!');}}, 'Click me :D');
 
 var $root = document.querySelector('#root');
 var $reload = document.querySelector('#reload');
-updateElement($root, n);
-
+updateElement($root, el);
 
 $reload.addEventListener('click', function() {
-  updateElement($root, n);
+  updateElement($root, el);
 });
