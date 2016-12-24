@@ -1,4 +1,10 @@
 
+/*
+DEMO:
+http://codepen.io/filipvabrousek/pen/QGZWmW?editors=0010
+
+*/
+
 /*-----------------------------------------------H-------------------------------------*/
 function h(type, props) {
   for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
