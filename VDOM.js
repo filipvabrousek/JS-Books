@@ -1,17 +1,11 @@
-
-/*
-DEMO:
-http://codepen.io/filipvabrousek/pen/QGZWmW?editors=0010
-
-*/
-
+function S(e){
+    return document.querySelector(e);
+}
 
 /*-----------------------------------------------H-------------------------------------*/
 function h(type, props) {
   for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-    if (window.CP.shouldStopExecution(1)) {
-      break;
-    }
+    
     children[_key - 2] = arguments[_key];
   }
     
@@ -20,7 +14,7 @@ function h(type, props) {
     props: props || {},
     children: children
   };
-  window.CP.exitedLoop(1);
+  
 }
 
 
@@ -159,33 +153,67 @@ function updateElement($parent, newNode, oldNode) {
       }
       updateElement($parent.childNodes[index], newNode.children[i], oldNode.children[i], i);
     }
-    window.CP.exitedLoop(2);
   }
+    console.log("Element updated!");
 }
 
 
 
+/*-----------------------------------------------CUSTOM-------------------------------------*/
+
+
+
+var btn = h('button', {className: 'btn', onClick: function onClick() { alert("It is working!");}}, 'Click me :D');
+
+var $root = S('#container');
+var $reload =S('#reload');
+updateElement($root, btn);
+
+$reload.addEventListener('click', function() {
+  updateElement($root, btn);
+});
 
 
 
 
+/*
 
-/*-----------------------------------------------CUSTOM---------------------------------------*/
-/*function log(e) {
-  console.log(e.target.value);
-}
 
-?????????????
+
+<div id="container">
+ <!--Content will be replaced by virtual DOM-->
+</div>
+    
+    
+<button id="reload">+ button</button>
+ 
+
 */
 
 
+/*
+Button styles DO IN LIBRARY?
 
-var el = h('h1', {className: 'item', onClick: function onClick() { return alert('It works!');}}, 'Click me :D');
+.btn{
+padding: 2em 2em;
+margin: 2em;
+background: none;
+border: 3px solid #1abc9c;
+border-radius: 10px;
+    }
+    
+    
 
-var $root = document.querySelector('#root');
-var $reload = document.querySelector('#reload');
-updateElement($root, el);
+#reload{
+padding: 0.5em 0.5em;
+margin: 1em;
+background: none;
+border: none;
+color: dodgerblue;
+font-size: 20px;
+    }
 
-$reload.addEventListener('click', function() {
-  updateElement($root, el);
-});
+
+
+
+*/
