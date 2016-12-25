@@ -1,7 +1,8 @@
  
-    (function(){
+(function(){
         
-    var Ello = { 
+var Ello = {
+ 
 S: function S(e) {
   return document.querySelector(e);
 },
