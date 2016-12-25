@@ -1,2 +1,2 @@
-#Codename
-##24/12/2106
+#Ello.js
+##Small virtual DOM manipulating library
