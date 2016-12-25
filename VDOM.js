@@ -6,7 +6,6 @@ function S(e) {
 /*---------------------------------------------------RENDER-----------------------------------------------*/
 function render(type, props) {
   for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-
     children[_key - 2] = arguments[_key];
   }
 
@@ -134,12 +133,15 @@ function updateElement($parent, newNode, oldNode) {
     $parent.replaceChild(createElement(newNode), $parent.childNodes[index]);
   } else if (newNode.type) {
     updateProps($parent.childNodes[index], newNode.props, oldNode.props);
+    
     var newLength = newNode.children.length;
     var oldLength = oldNode.children.length;
+    
     for (var i = 0; i < newLength || i < oldLength; i++) {
       if (window.CP.shouldStopExecution(2)) {
         break;
       }
+      
       updateElement($parent.childNodes[index], newNode.children[i], oldNode.children[i], i);
     }
   }
