@@ -1,9 +1,10 @@
+
 function S(e) {
   return document.querySelector(e);
 }
 
-/*-----------------------------------------------H FUNCTION-------------------------------------*/
-function h(type, props) {
+/*---------------------------------------------------RENDER-----------------------------------------------*/
+function render(type, props) {
   for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
 
     children[_key - 2] = arguments[_key];
@@ -147,7 +148,7 @@ function updateElement($parent, newNode, oldNode) {
 
 /*-----------------------------------------------CUSTOM-------------------------------------*/
 
-const el = h('h2', {
+const el = render('h2', {
     className: 'title',
     onClick: function onClick() {
       this.style.color = "green";
