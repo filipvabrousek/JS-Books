@@ -136,17 +136,21 @@ function changed(node1, node2) {
 
 /*-----------------------------------------------UPDATE ELEMENT-------------------------------------*/
 function updateElement($parent, newNode, oldNode) {
+    
   var index = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+    
   if (!oldNode) {
     $parent.appendChild(createElement(newNode));
   } else if (!newNode) {
     $parent.removeChild($parent.childNodes[index]);
   } else if (changed(newNode, oldNode)) {
     $parent.replaceChild(createElement(newNode), $parent.childNodes[index]);
+      
   } else if (newNode.type) {
     updateProps($parent.childNodes[index], newNode.props, oldNode.props);
     var newLength = newNode.children.length;
     var oldLength = oldNode.children.length;
+      
     for (var i = 0; i < newLength || i < oldLength; i++) {
       if (window.CP.shouldStopExecution(2)) {
         break;
@@ -163,10 +167,15 @@ function updateElement($parent, newNode, oldNode) {
 
 
 
-var btn = h('button', {className: 'btn', onClick: function onClick() { alert("It is working!");}}, 'Click me :D');
+const btn = h('button', 
+{className: 'btn', onClick: function onClick() { 
+    alert("It is working!");
+}}, 
+'Add one more');
+
 
 var $root = S('#container');
-var $reload =S('#reload');
+var $reload = S('#reload');
 updateElement($root, btn);
 
 $reload.addEventListener('click', function() {
