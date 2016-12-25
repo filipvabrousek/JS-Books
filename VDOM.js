@@ -1,22 +1,21 @@
-function S(e){
-    return document.querySelector(e);
+function S(e) {
+  return document.querySelector(e);
 }
 
-/*-----------------------------------------------H-------------------------------------*/
+/*-----------------------------------------------H FUNCTION-------------------------------------*/
 function h(type, props) {
   for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-    
+
     children[_key - 2] = arguments[_key];
   }
-    
+
   return {
     type: type,
     props: props || {},
     children: children
   };
-  
-}
 
+}
 
 /*-----------------------------------------------SET BOOLEAN PROP-------------------------------------*/
 function setBooleanProp($target, name, value) {
@@ -27,7 +26,6 @@ function setBooleanProp($target, name, value) {
     $target[name] = false;
   }
 }
-
 
 /*-----------------------------------------------REMOVE BOOLEAN PROP AND SMALL-------------------------------------*/
 function removeBooleanProp($target, name) {
@@ -46,8 +44,6 @@ function extractEventName(name) {
 function isCustomProp(name) {
   return isEventProp(name) || name === 'forceUpdate';
 }
-
-
 
 /*-----------------------------------------------SET PROP-------------------------------------*/
 function setProp($target, name, value) {
@@ -75,14 +71,12 @@ function removeProp($target, name, value) {
   }
 }
 
-
 /*-----------------------------------------------SET PROPS-------------------------------------*/
 function setProps($target, props) {
   Object.keys(props).forEach(function(name) {
     setProp($target, name, props[name]);
   });
 }
-
 
 /*-----------------------------------------------UPDATE PROP-------------------------------------*/
 function updateProp($target, name, newVal, oldVal) {
@@ -92,7 +86,6 @@ function updateProp($target, name, newVal, oldVal) {
     setProp($target, name, newVal);
   }
 }
-
 
 /*-----------------------------------------------UPDATE PROPS-------------------------------------*/
 function updateProps($target, newProps) {
@@ -112,8 +105,6 @@ function addEventListeners($target, props) {
   });
 }
 
-
-
 /*-----------------------------------------------CREATE ELEMENT-------------------------------------*/
 function createElement(node) {
   if (typeof node === 'string') {
@@ -126,31 +117,24 @@ function createElement(node) {
   return $el;
 }
 
-
 /*-----------------------------------------------CHANGED-------------------------------------*/
 function changed(node1, node2) {
   return (typeof node1 === 'undefined' ? 'undefined' : _typeof(node1)) !== (typeof node2 === 'undefined' ? 'undefined' : _typeof(node2)) || typeof node1 === 'string' && node1 !== node2 || node1.type !== node2.type || node1.props && node1.props.forceUpdate;
 }
 
-
-
 /*-----------------------------------------------UPDATE ELEMENT-------------------------------------*/
 function updateElement($parent, newNode, oldNode) {
-    
   var index = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
-    
   if (!oldNode) {
     $parent.appendChild(createElement(newNode));
   } else if (!newNode) {
     $parent.removeChild($parent.childNodes[index]);
   } else if (changed(newNode, oldNode)) {
     $parent.replaceChild(createElement(newNode), $parent.childNodes[index]);
-      
   } else if (newNode.type) {
     updateProps($parent.childNodes[index], newNode.props, oldNode.props);
     var newLength = newNode.children.length;
     var oldLength = oldNode.children.length;
-      
     for (var i = 0; i < newLength || i < oldLength; i++) {
       if (window.CP.shouldStopExecution(2)) {
         break;
@@ -158,71 +142,57 @@ function updateElement($parent, newNode, oldNode) {
       updateElement($parent.childNodes[index], newNode.children[i], oldNode.children[i], i);
     }
   }
-    console.log("Element updated!");
+  console.log("Element updated!");
 }
-
-
 
 /*-----------------------------------------------CUSTOM-------------------------------------*/
 
-
-
-const btn = h('button', 
-{className: 'btn', onClick: function onClick() { 
-    alert("It is working!");
-}}, 
-'Add one more');
-
+const el = h('h2', {
+    className: 'title',
+    onClick: function onClick() {
+      this.style.color = "green";
+    }
+  },
+  'Hello world! Click to change color.');
 
 var $root = S('#container');
 var $reload = S('#reload');
-updateElement($root, btn);
+updateElement($root, el);
 
 $reload.addEventListener('click', function() {
-  updateElement($root, btn);
+  updateElement($root, el);
 });
-
-
-
 
 /*
 
 
-
 <div id="container">
- <!--Content will be replaced by virtual DOM-->
+  <!--Content will be replaced by virtual DOM-->
 </div>
-    
-    
-<button id="reload">+ button</button>
+
+<button id="reload">+</button>
  
 
 */
 
-
 /*
-Button styles DO IN LIBRARY?
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
-.btn{
-padding: 2em 2em;
-margin: 2em;
-background: none;
-border: 3px solid #1abc9c;
-border-radius: 10px;
-    }
-    
-    
+#reload {
+  padding: 1em;
+  background: none;
+  border: none;
+  color: dodgerblue;
+  font-size: 20px;
+}
 
-#reload{
-padding: 0.5em 0.5em;
-margin: 1em;
-background: none;
-border: none;
-color: dodgerblue;
-font-size: 20px;
-    }
-
-
+.title {
+  padding: 2em;
+}
 
 
 */
