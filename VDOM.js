@@ -1,11 +1,13 @@
 
+
 function S(e) {
   return document.querySelector(e);
 }
 
-/*---------------------------------------------------RENDER-----------------------------------------------*/
+/*-----------------------------------------------H FUNCTION-------------------------------------*/
 function render(type, props) {
   for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+
     children[_key - 2] = arguments[_key];
   }
 
@@ -18,19 +20,19 @@ function render(type, props) {
 }
 
 /*-----------------------------------------------SET BOOLEAN PROP-------------------------------------*/
-function setBooleanProp($target, name, value) {
+function setBooleanProp(target, name, value) {
   if (value) {
-    $target.setAttribute(name, value);
-    $target[name] = true;
+    target.setAttribute(name, value);
+    target[name] = true;
   } else {
-    $target[name] = false;
+    target[name] = false;
   }
 }
 
 /*-----------------------------------------------REMOVE BOOLEAN PROP AND SMALL-------------------------------------*/
-function removeBooleanProp($target, name) {
-  $target.removeAttribute(name);
-  $target[name] = false;
+function removeBooleanProp(target, name) {
+  target.removeAttribute(name);
+  target[name] = false;
 }
 
 function isEventProp(name) {
@@ -46,61 +48,61 @@ function isCustomProp(name) {
 }
 
 /*-----------------------------------------------SET PROP-------------------------------------*/
-function setProp($target, name, value) {
+function setProp(target, name, value) {
   if (isCustomProp(name)) {
     return;
   } else if (name === 'className') {
-    $target.setAttribute('class', value);
+    target.setAttribute('class', value);
   } else if (typeof value === 'boolean') {
-    setBooleanProp($target, name, value);
+    setBooleanProp(target, name, value);
   } else {
-    $target.setAttribute(name, value);
+    target.setAttribute(name, value);
   }
 }
 
 /*-----------------------------------------------REMOVE PROP-------------------------------------*/
-function removeProp($target, name, value) {
+function removeProp(target, name, value) {
   if (isCustomProp(name)) {
     return;
   } else if (name === 'className') {
-    $target.removeAttribute('class');
+    target.removeAttribute('class');
   } else if (typeof value === 'boolean') {
-    removeBooleanProp($target, name);
+    removeBooleanProp(target, name);
   } else {
-    $target.removeAttribute(name);
+    target.removeAttribute(name);
   }
 }
 
 /*-----------------------------------------------SET PROPS-------------------------------------*/
-function setProps($target, props) {
+function setProps(target, props) {
   Object.keys(props).forEach(function(name) {
-    setProp($target, name, props[name]);
+    setProp(target, name, props[name]);
   });
 }
 
 /*-----------------------------------------------UPDATE PROP-------------------------------------*/
-function updateProp($target, name, newVal, oldVal) {
+function updateProp(target, name, newVal, oldVal) {
   if (!newVal) {
-    removeProp($target, name, oldVal);
+    removeProp(target, name, oldVal);
   } else if (!oldVal || newVal !== oldVal) {
-    setProp($target, name, newVal);
+    setProp(target, name, newVal);
   }
 }
 
 /*-----------------------------------------------UPDATE PROPS-------------------------------------*/
-function updateProps($target, newProps) {
+function updateProps(target, newProps) {
   var oldProps = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
   var props = Object.assign({}, newProps, oldProps);
   Object.keys(props).forEach(function(name) {
-    updateProp($target, name, newProps[name], oldProps[name]);
+    updateProp(target, name, newProps[name], oldProps[name]);
   });
 }
 
 /*-----------------------------------------------ADD ELS-------------------------------------*/
-function addEventListeners($target, props) {
+function addEventListeners(target, props) {
   Object.keys(props).forEach(function(name) {
     if (isEventProp(name)) {
-      $target.addEventListener(extractEventName(name), props[name]);
+      target.addEventListener(extractEventName(name), props[name]);
     }
   });
 }
@@ -110,11 +112,11 @@ function createElement(node) {
   if (typeof node === 'string') {
     return document.createTextNode(node);
   }
-  var $el = document.createElement(node.type);
-  setProps($el, node.props);
-  addEventListeners($el, node.props);
-  node.children.map(createElement).forEach($el.appendChild.bind($el));
-  return $el;
+  var el = document.createElement(node.type);
+  setProps(el, node.props);
+  addEventListeners(el, node.props);
+  node.children.map(createElement).forEach(el.appendChild.bind(el));
+  return el;
 }
 
 /*-----------------------------------------------CHANGED-------------------------------------*/
@@ -123,26 +125,23 @@ function changed(node1, node2) {
 }
 
 /*-----------------------------------------------UPDATE ELEMENT-------------------------------------*/
-function updateElement($parent, newNode, oldNode) {
+function updateElement(parent, newNode, oldNode) {
   var index = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
   if (!oldNode) {
-    $parent.appendChild(createElement(newNode));
+    parent.appendChild(createElement(newNode));
   } else if (!newNode) {
-    $parent.removeChild($parent.childNodes[index]);
+    parent.removeChild(parent.childNodes[index]);
   } else if (changed(newNode, oldNode)) {
-    $parent.replaceChild(createElement(newNode), $parent.childNodes[index]);
+    parent.replaceChild(createElement(newNode), parent.childNodes[index]);
   } else if (newNode.type) {
-    updateProps($parent.childNodes[index], newNode.props, oldNode.props);
-    
+    updateProps(parent.childNodes[index], newNode.props, oldNode.props);
     var newLength = newNode.children.length;
     var oldLength = oldNode.children.length;
-    
     for (var i = 0; i < newLength || i < oldLength; i++) {
       if (window.CP.shouldStopExecution(2)) {
         break;
       }
-      
-      updateElement($parent.childNodes[index], newNode.children[i], oldNode.children[i], i);
+      updateElement(parent.childNodes[index], newNode.children[i], oldNode.children[i], i);
     }
   }
   console.log("Element updated!");
@@ -158,12 +157,13 @@ const el = render('h2', {
   },
   'Hello world! Click to change color.');
 
-var $root = S('#container');
-var $reload = S('#reload');
-updateElement($root, el);
 
-$reload.addEventListener('click', function() {
-  updateElement($root, el);
+var root = S('#container');
+var reload = S('#reload');
+updateElement(root, el);
+
+reload.addEventListener('click', function() {
+  updateElement(S('#container'), el);
 });
 
 /*
