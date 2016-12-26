@@ -2,8 +2,8 @@
  var Ello = (function () {
 
    var S = function(e) {
-         //return document.querySelector(e);
-       console.log(e);
+         return document.querySelector(e);
+       
        };
 
 
@@ -132,30 +132,31 @@ var setBooleanProp = function(target, name, value) {
     
     
     /*-----------------------------------------------UPDATE ELEMENT-------------------------------------*/
-       var updateElement = function(parent, newNode, oldNode) {
-         var index = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
-         if (!oldNode) {
-           parent.appendChild(createElement(newNode));
-         } else if (!newNode) {
-           parent.removeChild(parent.childNodes[index]);
-         } else if (changed(newNode, oldNode)) {
-           parent.replaceChild(createElement(newNode), parent.childNodes[index]);
-
-         } else if (newNode.type) {
-           updateProps(parent.childNodes[index], newNode.props, oldNode.props);
-
-           var newLength = newNode.children.length;
-           var oldLength = oldNode.children.length;
-           for (var i = 0; i < newLength || i < oldLength; i++) {
-             if (window.CP.shouldStopExecution(2)) {
-               break;
-             }
-
-             updateElement(parent.childNodes[index], newNode.children[i], oldNode.children[i], i);
-           }
-         }
-         console.log("Element updated!");
-       };
+    /*-----------------------------------------------UPDATE ELEMENT-------------------------------------*/
+function updateElement(parent, newNode, oldNode) {
+  var index = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+  if (!oldNode) {
+    parent.appendChild(createElement(newNode));
+  } else if (!newNode) {
+    parent.removeChild(parent.childNodes[index]);
+  } else if (changed(newNode, oldNode)) {
+    parent.replaceChild(createElement(newNode), parent.childNodes[index]);
+    
+  } else if (newNode.type) {
+    updateProps(parent.childNodes[index], newNode.props, oldNode.props);
+    
+    var newLength = newNode.children.length;
+    var oldLength = oldNode.children.length;
+    for (var i = 0; i < newLength || i < oldLength; i++) {
+      if (window.CP.shouldStopExecution(2)) {
+        break;
+      }
+      
+      updateElement(parent.childNodes[index], newNode.children[i], oldNode.children[i], i);
+    }
+  }
+  console.log("Element updated!");
+};
        
        
        
@@ -186,7 +187,7 @@ var setBooleanProp = function(target, name, value) {
 
 /*-----------------------------------------------CUSTOM-------------------------------------*/
 
-    Ello.S("hihi");
+    
     
 const el = Ello.render('h2', {
     className: 'title',
@@ -199,7 +200,7 @@ const el = Ello.render('h2', {
 
 var root = Ello.S('#container');
 var reload = Ello.S('#reload');
-
+    
 Ello.updateElement(root, el);
 
     
@@ -207,4 +208,4 @@ reload.addEventListener('click', function() {
   Ello.updateElement(root, el);
 });
 
-        
+      
