@@ -169,7 +169,7 @@ var Ello = (function() {
 
 /*-----------------------------------------------CUSTOM-------------------------------------*/
 
-Ello.S("hihi");
+
 
 const el = Ello.render('h2', {
     className: 'title',
