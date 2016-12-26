@@ -1,20 +1,14 @@
-var Module = (function () {
+var Ello = (function () {
 
-  var privateMethod = function () {
-    // private
-  };
+   var S = function() {
+         //return document.querySelector(e);
+       console.log("S works");
+       };
 
-  var someMethod = function () {
-    // public
-  };
-
-  var anotherMethod = function () {
-    // public
-  };
-  
   return {
-    someMethod: someMethod,
-    anotherMethod: anotherMethod
+   S:S
   };
 
 })();
+
+Ello.S(); 
