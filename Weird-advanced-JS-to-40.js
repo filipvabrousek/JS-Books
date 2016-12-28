@@ -1,4 +1,4 @@
-/*                  2                             */
+/*------------------------------------------2-----------------------------------------*/
 var a;
 
 //do === doesnt allow coercion
@@ -23,7 +23,7 @@ console.log(JSONvalue);
 
 
 console.log("-------------");
-/*                  4                             */
+//*------------------------------------------4-----------------------------------------*/
 var Filip = {
     first: "Filip",
     last: "Vabrousek",
@@ -186,4 +186,25 @@ function gr(first, lang, ...other){
 gr("Filip");
 
 
-//CONTINUE BY LECTURE 40
+
+//FUNCTION OVERLOADING
+function G(name, lang){
+    lang = lang || "en";
+    
+    if (lang === "en"){
+        console.log("Hello " + name);
+    }
+    
+    if (lang === "es"){
+        console.log("Holla " + name);
+    }
+}
+
+function GE(name){
+    G(name, "en");
+}
+
+GE("Filip");
+
+
+//CONTINUE IN THE NEXT FILE BY 41
