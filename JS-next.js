@@ -127,3 +127,128 @@ fs2[1]();
 fs2[2]();
 
 
+
+//FUNCTION FACTORIES
+
+function makeGreeting(lang){
+    return function(name){
+        
+        if (lang === "en"){
+            console.log("Hello " + name);
+        }
+        
+        if (lang === "es"){
+            console.log("Hola " + name);
+        }
+    }
+    
+}
+
+
+makeGreeting("en")("Filip"); //Hello Filip
+
+
+//CLOSURES AND CALLBACKS
+
+
+function sayHiLater(){
+    
+    var g = "Hi";
+    setTimeout(function(){
+        console.log(g);
+    }, 2000)
+}
+
+//sayHiLater();
+
+
+function tellMeWhenDone(callback){
+
+var a = 1000;
+var b = 2000;
+callback();
+}
+
+
+tellMeWhenDone(function(){
+   console.log("I am done!");
+});
+
+tellMeWhenDone(function(){
+   console.log("All done!");
+});
+
+
+console.log("----------------");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//CALL, BIND, APPLY - deciding what "this" will be
+
+var person = {
+    first: "John",
+    last: "Doe",
+    fullName: function(){
+        var full = this.first + " " + this.last;
+        return full;
+    }
+
+}
+
+
+
+var log = function(a1, a2){
+    console.log("Logged: " + this.fullName());
+    console.log("Arguments: " + a1 + " " + a2);
+    console.log("----------------");
+}
+
+
+var logName = log.bind(person); // BIND - new function was created
+logName("en");
+
+log.call(person, "en", "es");
+log.apply(person, ["en", "es"]);
+
+
+var person2 = {
+    first: "Jane",
+    last: "Doe"
+}
+
+person.fullName.apply(person2);
+
+
+//BIND function curying (creating copy of a function with some preset parameters)
+
+function multiply(a, b){
+    return a * b;
+}
+
+var multiplyByTwo = multiply.bind(this, 2); //.....bind(this, 2, 2) -> 4;
+console.log(multiplyByTwo(4));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
