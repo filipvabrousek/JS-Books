@@ -76,7 +76,7 @@ After FOR LOOP returns, arr and i equal to 3 stays in memory
 function buildFunctions(){
     
     var arr = [];
-    (for var i=0; i<3 ; i++){
+    for (var i=0; i<3 ; i++){
         arr.push(function(){
                  console.log(i);
             }
@@ -96,5 +96,30 @@ fs[1]();
 fs[2]();
 
 
+
+
+function buildFunctions2(){
+    
+    var arr = [];
+   for (var i=0; i<3 ; i++){
+        arr.push((function(j){
+             return function(){
+                 console.log(j);
+             }
+            }(i));
+       
+        )
+    }
+    return arr; //after iterations in the FOR loop, i is 3
+}
+
+
+var fs2 = buildFunctions();
+
+
+
+fs2[0]();
+fs2[1]();
+fs2[2]();
 
 
