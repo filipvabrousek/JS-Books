@@ -77,11 +77,13 @@ function buildFunctions(){
     
     var arr = [];
     for (var i=0; i<3 ; i++){
-        arr.push(function(){
+        arr.push(
+            function(){
                  console.log(i);
             }
-       
         )
+       
+        
     }
     return arr; //after iterations in the FOR loop, i is 3
 }
@@ -101,12 +103,14 @@ fs[2]();
 function buildFunctions2(){
     
     var arr = [];
-   for (var i=0; i<3 ; i++){
-        arr.push((function(j){
+    
+   for (var i = 0; i < 3; i++){
+        arr.push(
+            (function(j){
              return function(){
                  console.log(j);
              }
-            }(i));
+            }(i))
        
         )
     }
@@ -114,7 +118,7 @@ function buildFunctions2(){
 }
 
 
-var fs2 = buildFunctions();
+var fs2 = buildFunctions2();
 
 
 
