@@ -1,51 +1,3 @@
-//+ARRAY METHODS, ARRAYS IN ES6, ARROW FUNCTIONS
-
-
-var filip = {
-name: "Filip",
-age: 17,
-presentation: function(style, timeOfTheDay){
-    if (style === "formal"){
-        console.log("Good " + timeOfTheDay + " ladies and gentlemen. I am " + this.name + " and I am " + this.age + " years old." );
-    } else if (style === "friendly"){
-        console.log("Hey whats up " + this.name + " ?. I am " + this.age + ". good " + timeOfTheDay);
-    }
-}
-};
-
-filip.presentation("friendly", "evening");
-
-
-
-
-var terezka = {
-name: "Terezka",
-age: 18
-};
-
-var karel = {
-name: "Karel",
-age: 16
-};
-
-
-
-
-filip.presentation.call(terezka, "friendly", "morning");
-
-filip.presentation.apply(karel, ["formal", "evening"]);
-
-
-var filipFriendly = filip.presentation.bind(karel, "friendly");
-filipFriendly("night");
-
-
-
-
-
-
-
-
 
 
 
@@ -124,6 +76,16 @@ class Park extends Element{
 }
 
 
+//Arrow f
+var boxes = document.querySelectorAll("#box");
+
+
+var boxesAr5 = Array.prototype.slice.call(boxes);
+boxesAr5.forEach(function(cur){
+  cur.style.background = "orange";
+})
+
+Array.from(boxes).forEach(cur => cur.style.background = "green");
 
 
 
