@@ -75,9 +75,7 @@ class Park extends Element{
     }
 }
 
-for (const cur of boxes){
-  cur.style.background="dodgerblue";
-}
+
 
 
 
