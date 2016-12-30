@@ -75,7 +75,8 @@ class Park extends Element{
     }
 }
 
-
+var central = new Park("Central Park", 1989, 22988, 23499);
+central.treedensity();
 
 
 
