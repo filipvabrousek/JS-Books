@@ -181,3 +181,26 @@ $('#login').click(function() {
     loginGrtr.setLang($('#lang').val()).HTMLGreeting('#greeting', true).log();
     
 });
+
+
+
+/*
+
+
+
+  <div id="logindiv">
+    <select id="lang">
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+            </select>
+    <input type="button" value="Login" id="login" />
+  </div>
+  <h1 id='greeting'></h1>
+  <script src="jquery-1.11.2.js"></script>
+  
+
+
+
+
+
+*/
