@@ -1,7 +1,7 @@
 
 
-
-//CLOSURES - MAKE STANDALONE QUESTION
+//+CALLBACK
+//+CLOSURES - MAKE STANDALONE QUESTION
 /*
 After anonymous function returns, STH stays in memory
 Then, after sayHi creates new execution content, and find STH sitting there
@@ -47,36 +47,6 @@ fs[2]();
 
 
 
-
-
-
-
-
-/*----------------------------------------------------------ELEMENT CLASS------------------------------------------------------------*/
-class Element {
-    constructor(name, built){
-        this.name = name;
-        this.buildYear = built;
-    }
-}
-    
-    
-/*----------------------------------------------------------PARK CLASS------------------------------------------------------------*/
-class Park extends Element{
-    constructor(name, built, area, treecount){
-        super(name, built);
-        this.area = area; //km2
-        this.treecount = treecount;
-    }
-    
-    treeDensity(){
-        const density = this.treecount / this.area;
-        console.log(`${this.name} has tree density of ${density} trees per square km.`);
-    }
-}
-
-var central = new Park("Central Park", 1989, 22988, 23499);
-central.treedensity();
 
 
 
