@@ -75,18 +75,9 @@ class Park extends Element{
     }
 }
 
-
-//Arrow f
-var boxes = document.querySelectorAll("#box");
-
-
-var boxesAr5 = Array.prototype.slice.call(boxes);
-boxesAr5.forEach(function(cur){
-  cur.style.background = "orange";
-})
-
-Array.from(boxes).forEach(cur => cur.style.background = "green");
-
+for (const cur of boxes){
+  cur.style.background="dodgerblue";
+}
 
 
 
