@@ -1,6 +1,18 @@
 #Budget app
 ## Part 1
-desc
+IIFE budgetController contains very big **Expense** class. It contains functions:
+* calcPercentage 
+* getPercentage
+* Income
+* calculateTotal,
+* variable data, 
+* big *RETURN* block.
+
+RETURN block contains:
+* addItem
+* deleteItem
+* calculateBudget
+* calculatePercentages
 
 ```javascript
 const budgetController = ((() => {
