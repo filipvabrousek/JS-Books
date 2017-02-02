@@ -171,7 +171,18 @@ const budgetController = ((() => {
 
 
 ## Part 2
-desc
+*UIcontrolle* contains:
+* const DOMstrings
+* const formatNumber
+* const nodeListForEach
+* addListItem  - adds an item
+* deleteListItem - delets an item
+* clearFields
+* displayBudget
+* displayPercentages
+* displayMonth
+* changedType
+* getDOMStrings
 
 ```javascript
 const UIController = ((() => {
@@ -350,7 +361,12 @@ const UIController = ((() => {
 ```
 
 ## Part 3
-desc
+Part 3 contains:
+* const setupELs
+* const updateBudget
+* const updatePercentages
+* var ctrlAddItem
+* var ctrlDeleteItem
 
 ```javascript
 const controller = (((budgetCtrl, UICtrl) => {
