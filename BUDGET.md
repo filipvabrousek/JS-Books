@@ -171,7 +171,7 @@ const budgetController = ((() => {
 
 
 ## Part 2
-*UIcontrolle* contains:
+*UIcontroller* contains:
 * const DOMstrings
 * const formatNumber
 * const nodeListForEach
