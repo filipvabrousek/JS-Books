@@ -1,4 +1,5 @@
 # Budget app
+Warning: insert <script> to the bottom of the <body> element!!!!
 ## Part 1
 IIFE budgetController contains very big **Expense** class. It contains functions:
 * calcPercentage 
