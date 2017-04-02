@@ -1,59 +1,36 @@
-;(function(global, $) {
-    
+;(((global, $) => {
     // 'new' an object
-    var Greetr = function(firstName, lastName, language) {
-        return new Greetr.init(firstName, lastName, language);   
-    }
-    
-    // hidden within the scope of the IIFE and never directly accessible
-    var supportedLangs = ['en', 'es'];
-    
-    // informal greetings
-    var greetings = {
-        en: 'Hello',
-        es: 'Hola'
-    };
-    
-    // formal greetings
-    var formalGreetings = {
-        en: 'Greetings',
-        es: 'Saludos'
-    };
-    
-    // logger messages
-    var logMessages = {
-        en: 'Logged in',
-        es: 'Inició sesión'
-    };
-    
-    // prototype holds methods (to save memory space)
-    Greetr.prototype = {
-        
+    class Greetr {
+        constructor(firstName, lastName, language) {
+            return new Greetr.init(firstName, lastName, language);   
+        }
+
+        // prototype holds methods (to save memory space)
         // 'this' refers to the calling object at execution time
-        fullName: function() {
-            return this.firstName + ' ' + this.lastName;   
-        },
-        
-        validate: function() {
+        fullName() {
+            return `${this.firstName} ${this.lastName}`;   
+        }
+
+        validate() {
             // check that is a valid language
             // references the externally inaccessible 'supportedLangs' within the closure
-             if (supportedLangs.indexOf(this.language)  === -1) {
+             if (!supportedLangs.includes(this.language)) {
                 throw "Invalid language";   
              }
-        },
-        
+        }
+
         // retrieve messages from object by referring to properties using [] syntax
-        greeting: function() {
-            return greetings[this.language] + ' ' + this.firstName + '!';
-        },
-        
-        formalGreeting: function() {
-            return formalGreetings[this.language] + ', ' + this.fullName();  
-        },
-        
+        greeting() {
+            return `${greetings[this.language]} ${this.firstName}!`;
+        }
+
+        formalGreeting() {
+            return `${formalGreetings[this.language]}, ${this.fullName()}`;  
+        }
+
         // chainable methods return their own containing object
-        greet: function(formal) {
-            var msg;
+        greet(formal) {
+            let msg;
             
             // if undefined or null it will be coerced to 'false'
             if (formal) {
@@ -70,18 +47,18 @@
             // 'this' refers to the calling object at execution time
             // makes the method chainable
             return this;
-        },
-        
-        log: function() {
+        }
+
+        log() {
             if (console) {
-                console.log(logMessages[this.language] + ': ' + this.fullName()); 
+                console.log(`${logMessages[this.language]}: ${this.fullName()}`); 
             }
             
             // make chainable
             return this;
-        },
-                            
-        setLang: function(lang) {
+        }
+
+        setLang(lang) {
             
             // set the language
             this.language = lang;
@@ -91,9 +68,9 @@
             
             // make chainable
             return this;
-        },
-        
-        HTMLGreeting: function(selector, formal) {
+        }
+
+        HTMLGreeting(selector, formal) {
             if (!$) {
                 throw 'jQuery not loaded';   
             }
@@ -103,7 +80,7 @@
             }
             
             // determine the message
-            var msg;
+            let msg;
             if (formal) {
                 msg = this.formalGreeting();   
             }
@@ -117,28 +94,47 @@
             // make chainable
             return this;
         }
-        
-    };
-    
-    // the actual object is created here, allowing us to 'new' an object without calling 'new'
-    Greetr.init = function(firstName, lastName, language) {
-        
-        var self = this;
-        self.firstName = firstName || '';
-        self.lastName = lastName || '';
-        self.language = language || 'en';
-        
-        self.validate();
-        
+
+        // the actual object is created here, allowing us to 'new' an object without calling 'new'
+        static init(firstName, lastName, language) {
+            
+            const self = this;
+            self.firstName = firstName || '';
+            self.lastName = lastName || '';
+            self.language = language || 'en';
+            
+            self.validate();
+            
+        }
     }
-    
+
+    // hidden within the scope of the IIFE and never directly accessible
+    var supportedLangs = ['en', 'es'];
+
+    // informal greetings
+    var greetings = {
+        en: 'Hello',
+        es: 'Hola'
+    };
+
+    // formal greetings
+    var formalGreetings = {
+        en: 'Greetings',
+        es: 'Saludos'
+    };
+
+    // logger messages
+    var logMessages = {
+        en: 'Logged in',
+        es: 'Inició sesión'
+    };
+
     // trick borrowed from jQuery so we don't have to use the 'new' keyword
     Greetr.init.prototype = Greetr.prototype;
-    
+
     // attach our Greetr to the global object, and provide a shorthand '$G' for ease our poor fingers
     global.Greetr = global.G$ = Greetr;
-    
-}(window, jQuery));
+})(window, jQuery));
 
 
 
@@ -163,16 +159,16 @@
 
 
 // gets a new object (the architecture allows us to not have to use the 'new' keyword here)
-var g = G$('John', 'Doe');
+const g = G$('John', 'Doe');
 
 // use our chainable methods
 g.greet().setLang('es').greet(true).log();
 
 // let's use our object on the click of the login button
-$('#login').click(function() {
+$('#login').click(() => {
    
     // create a new 'Greetr' object (let's pretend we know the name from the login)
-    var loginGrtr = G$('John', 'Doe');
+    const loginGrtr = G$('John', 'Doe');
     
      // hide the login on the screen
     $('#logindiv').hide();
@@ -185,9 +181,6 @@ $('#login').click(function() {
 
 
 /*
-
-
-
   <div id="logindiv">
     <select id="lang">
                 <option value="en">English</option>
@@ -198,9 +191,4 @@ $('#login').click(function() {
   <h1 id='greeting'></h1>
   <script src="jquery-1.11.2.js"></script>
   
-
-
-
-
-
 */
