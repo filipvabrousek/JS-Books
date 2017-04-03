@@ -1,4 +1,4 @@
-# Module patte
+# Module pattern
 
 ```javascript
 const budget = ((() => {
