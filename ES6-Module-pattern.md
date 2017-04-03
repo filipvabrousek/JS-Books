@@ -1,4 +1,4 @@
-# Module pattern
+# ES6 Module pattern
 
 ```javascript
 const budget = ((() => {
@@ -15,7 +15,6 @@ const budget = ((() => {
 
 
 
-
 const controller = (((budgetC) => {
    var z = budget.public(4);
 
@@ -25,6 +24,7 @@ const controller = (((budgetC) => {
        } 
     }
 }))(budget); //This name can't change!!! (the above can be whatever you want)
+
 
 
 controller.nextPublic();
