@@ -349,18 +349,15 @@ getDOMstrings
 
 ## Part 3
 Part 3 contains:
-* const setupELs
-* const updateBudget
-* const updatePercentages
-* var ctrlAddItem
-* var ctrlDeleteItem
+* ...
 
 ```javascript
 const controller = (((budgetCtrl, UICtrl) => {
 
+    
+//-------------------------------
   const setupEventListeners = () => {
     const DOM = UICtrl.getDOMstrings();
-
     document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
     document.addEventListener('keypress', event => {
@@ -370,59 +367,42 @@ const controller = (((budgetCtrl, UICtrl) => {
     });
 
     document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
-
     document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
   };
 
+    
+//-------------------------------
   const updateBudget = () => {
-
-    // 1. Calculate the budget
     budgetCtrl.calculateBudget();
-
-    // 2. Return the budget
     const budget = budgetCtrl.getBudget();
-
-    // 3. Display the budget on the UI
     UICtrl.displayBudget(budget);
   };
 
+//-------------------------------
   const updatePercentages = () => {
-
-    // 1. Calculate percentages
     budgetCtrl.calculatePercentages();
-
-    // 2. Read percentages from the budget controller
     const percentages = budgetCtrl.getPercentages();
-
-    // 3. Update the UI with the new percentages
     UICtrl.displayPercentages(percentages);
   };
 
+//-------------------------------
   var ctrlAddItem = () => {
     let input;
     let newItem;
 
-    // 1. Get the field input data
     input = UICtrl.getInput();
 
     if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
-      // 2. Add the item to the budget controller
+   
       newItem = budgetCtrl.addItem(input.type, input.description, input.value);
-
-      // 3. Add the item to the UI
       UICtrl.addListItem(newItem, input.type);
-
-      // 4. Clear the fields
       UICtrl.clearFields();
-
-      // 5. Calculate and update budget
       updateBudget();
-
-      // 6. Calculate and update percentages
       updatePercentages();
     }
   };
 
+//-------------------------------
   var ctrlDeleteItem = event => {
     let itemID;
     let splitID;
@@ -433,25 +413,22 @@ const controller = (((budgetCtrl, UICtrl) => {
 
     if (itemID) {
 
-      //inc-1
       splitID = itemID.split('-');
       type = splitID[0];
       ID = parseInt(splitID[1]);
-
-      // 1. delete the item from the data structure
       budgetCtrl.deleteItem(type, ID);
-
-      // 2. Delete the item from the UI
       UICtrl.deleteListItem(itemID);
-
-      // 3. Update and show the new budget
+        
       updateBudget();
-
-      // 4. Calculate and update percentages
       updatePercentages();
     }
   };
 
+    
+/*----------------------------------Return of controller IIFE--------------------------
+CONTAINS:
+init()
+*/
   return {
     init() {
       console.log('Application has started.');
@@ -468,5 +445,6 @@ const controller = (((budgetCtrl, UICtrl) => {
 
 }))(budgetController, UIController);
 
+//only line of outside code :D
 controller.init();
 ```
