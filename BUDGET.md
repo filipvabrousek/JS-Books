@@ -157,7 +157,7 @@ getBudget
 
 
 ## Part 2
-* UIcontroller* contains:
+* UIcontroller contains:
 * 2 standalone functions
 big return block of IIFE with other functions
 
@@ -349,7 +349,8 @@ getDOMstrings
 
 ## Part 3
 Part 3 contains:
-* ...
+many standalone functions
+IIFE return block with init() function
 
 ```javascript
 const controller = (((budgetCtrl, UICtrl) => {
