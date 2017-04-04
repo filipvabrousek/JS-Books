@@ -349,8 +349,8 @@ getDOMstrings
 
 ## Part 3
 Part 3 contains:
-many standalone functions
-IIFE return block with init() function
+* many standalone functions
+* IIFE return block with init() function
 
 ```javascript
 const controller = (((budgetCtrl, UICtrl) => {
