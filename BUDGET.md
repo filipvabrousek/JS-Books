@@ -157,21 +157,13 @@ getBudget
 
 
 ## Part 2
-*UIcontroller* contains:
-* const DOMstrings
-* const formatNumber
-* const nodeListForEach
-* addListItem  - adds an item
-* deleteListItem - delets an item
-* clearFields
-* displayBudget
-* displayPercentages
-* displayMonth
-* changedType
-* getDOMStrings
+* UIcontroller* contains:
+* 2 standalone functions
+big return block of IIFE with other functions
 
 ```javascript
 const UIController = ((() => {
+
 
   const DOMstrings = {
     inputType: '.add__type',
@@ -189,20 +181,14 @@ const UIController = ((() => {
     dateLabel: '.budget__title--month'
   };
 
+    
+    /*--------------------------------------> Standalone functions of UIController IIFE----------------------------*/
+  
   const formatNumber = (num, type) => {
     var numSplit, int, dec, type;
 
-    /*
-        + or - before number
-        exactly 2 decimal points
-        comma separating the thousands
-        2310.4567 -> + 2,310.46
-        2000 -> + 2,000.00
-        */
-
     num = Math.abs(num);
     num = num.toFixed(2);
-
     numSplit = num.split('.');
 
     int = numSplit[0];
@@ -211,9 +197,9 @@ const UIController = ((() => {
     }
 
     dec = numSplit[1];
-
     return `${type === 'exp' ? '-' : '+'} ${int}.${dec}`;
   };
+
 
   const nodeListForEach = (list, callback) => {
     for (let i = 0; i < list.length; i++) {
@@ -221,7 +207,24 @@ const UIController = ((() => {
     }
   };
 
+    
+    
+/*----------------------------------Return of UIController IIFE--------------------------
+CONTAINS:
+
+getInput
+addListItem
+deleteListItem
+clearFields
+displayBudget
+displayPercentages
+displayMonth
+changedType
+getDOMstrings
+*/
   return {
+      
+//-------------------------------
     getInput() {
       return {
         type: document.querySelector(DOMstrings.inputType).value, // Will be either inc or exp
@@ -230,11 +233,12 @@ const UIController = ((() => {
       };
     },
 
+      
+//-------------------------------
     addListItem(obj, type) {
       let html;
       let newHtml;
       let element;
-      // Create HTML string with placeholder text
 
       if (type === 'inc') {
         element = DOMstrings.incomeContainer;
@@ -250,24 +254,22 @@ const UIController = ((() => {
       newHtml = html.replace('%id%', obj.id);
       newHtml = newHtml.replace('%description%', obj.description);
       newHtml = newHtml.replace('%value%', formatNumber(obj.value, type));
-
-      // Insert the HTML into the DOM
       document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
     },
 
+      
+ //-------------------------------
     deleteListItem(selectorID) {
-
       const el = document.getElementById(selectorID);
       el.parentNode.removeChild(el);
-
     },
 
+//-------------------------------
     clearFields() {
       let fields;
       let fieldsArr;
 
       fields = document.querySelectorAll(`${DOMstrings.inputDescription}, ${DOMstrings.inputValue}`);
-
       fieldsArr = Array.prototype.slice.call(fields);
 
       fieldsArr.forEach((current, index, array) => {
@@ -277,6 +279,8 @@ const UIController = ((() => {
       fieldsArr[0].focus();
     },
 
+      
+ //-------------------------------
     displayBudget(obj) {
       let type;
       obj.budget > 0 ? type = 'inc' : type = 'exp';
@@ -293,12 +297,11 @@ const UIController = ((() => {
 
     },
 
+ //-------------------------------
     displayPercentages(percentages) {
-
       const fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
-
-      nodeListForEach(fields, (current, index) => {
-
+      
+        nodeListForEach(fields, (current, index) => {
         if (percentages[index] > 0) {
           current.textContent = `${percentages[index]}%`;
         } else {
@@ -308,6 +311,7 @@ const UIController = ((() => {
 
     },
 
+//-------------------------------
     displayMonth() {
       let now;
       let months;
@@ -315,26 +319,23 @@ const UIController = ((() => {
       let year;
 
       now = new Date();
-      //var christmas = new Date(2016, 11, 25);
-
       months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
       month = now.getMonth();
-
       year = now.getFullYear();
       document.querySelector(DOMstrings.dateLabel).textContent = `${months[month]} ${year}`;
     },
-
+      
+//-------------------------------
     changedType() {
 
-      const fields = document.querySelectorAll(
+    const fields = document.querySelectorAll(
         `${DOMstrings.inputType},${DOMstrings.inputDescription},${DOMstrings.inputValue}`);
 
       nodeListForEach(fields, cur => {
         cur.classList.toggle('red-focus');
       });
-
+        
       document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
-
     },
 
     getDOMstrings() {
