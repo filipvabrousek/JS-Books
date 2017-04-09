@@ -16,24 +16,22 @@ console.log(getPerson()); //UNDEFINED
 //WHITESPACE (absolutely ignores comments)
 
 //IIFE
-var g = function(name){
-    return "Hello " + name;
-}("Filip");
+const g = (name => `Hello ${name}`)("Filip");
 
 console.log(g);
 
 
-(function(name){
-    console.log("Hello " + name);
-})("Filip");
+((name => {
+    console.log(`Hello ${name}`);
+}))("Filip");
 
 
 //INTENTIONALY ATTACHING NAME TO GLOBAL OBJECT
 
-(function(global, name){
-    var e = "Hello";
+(((global, name) => {
+    const e = "Hello";
     e.greeting = "Hello!";
-})(window, "John");
+}))(window, "John");
 
 
 
@@ -61,12 +59,12 @@ Then, after sayHi creates new execution content, and find STH sitting there
 */
 
 function greet(sth){
-    return function(name){
-        console.log(sth + " " + name);
+    return name => {
+        console.log(`${sth} ${name}`);
     }
 }
 
-var sayHi = greet("Hi");
+const sayHi = greet("Hi");
 sayHi("Tony");
 
 
@@ -75,10 +73,10 @@ After FOR LOOP returns, arr and i equal to 3 stays in memory
 */
 function buildFunctions(){
     
-    var arr = [];
-    for (var i=0; i<3 ; i++){
+    const arr = [];
+    for (let i=0; i<3 ; i++){
         arr.push(
-            function(){
+            () => {
                  console.log(i);
             }
         )
@@ -89,7 +87,7 @@ function buildFunctions(){
 }
 
 
-var fs = buildFunctions();
+const fs = buildFunctions();
 
 
 
@@ -102,15 +100,13 @@ fs[2]();
 
 function buildFunctions2(){
     
-    var arr = [];
+    const arr = [];
     
-   for (var i = 0; i < 3; i++){
+   for (let i = 0; i < 3; i++){
         arr.push(
-            (function(j){
-             return function(){
-                 console.log(j);
-             }
-            }(i))
+            ((j => () => {
+            console.log(j);
+        })(i))
        
         )
     }
@@ -118,7 +114,7 @@ function buildFunctions2(){
 }
 
 
-var fs2 = buildFunctions2();
+const fs2 = buildFunctions2();
 
 
 
@@ -131,14 +127,14 @@ fs2[2]();
 //FUNCTION FACTORIES
 
 function makeGreeting(lang){
-    return function(name){
+    return name => {
         
         if (lang === "en"){
-            console.log("Hello " + name);
+            console.log(`Hello ${name}`);
         }
         
         if (lang === "es"){
-            console.log("Hola " + name);
+            console.log(`Hola ${name}`);
         }
     }
     
@@ -153,8 +149,8 @@ makeGreeting("en")("Filip"); //Hello Filip
 
 function sayHiLater(){
     
-    var g = "Hi";
-    setTimeout(function(){
+    const g = "Hi";
+    setTimeout(() => {
         console.log(g);
     }, 2000)
 }
@@ -164,17 +160,17 @@ function sayHiLater(){
 
 function tellMeWhenDone(callback){
 
-var a = 1000;
-var b = 2000;
+const a = 1000;
+const b = 2000;
 callback();
 }
 
 
-tellMeWhenDone(function(){
+tellMeWhenDone(() => {
    console.log("I am done!");
 });
 
-tellMeWhenDone(function(){
+tellMeWhenDone(() => {
    console.log("All done!");
 });
 
@@ -196,36 +192,36 @@ console.log("----------------");
 
 //CALL, BIND, APPLY - deciding what "this" will be = question?
 
-var person = {
+const person = {
     first: "John",
     last: "Doe",
-    fullName: function(){
-        var full = this.first + " " + this.last;
+    fullName() {
+        const full = `${this.first} ${this.last}`;
         return full;
     }
 
-}
+};
 
 
 
-var log = function(a1, a2){
-    console.log("Logged: " + this.fullName());
-    console.log("Arguments: " + a1 + " " + a2);
+const log = function(a1, a2){
+    console.log(`Logged: ${this.fullName()}`);
+    console.log(`Arguments: ${a1} ${a2}`);
     console.log("----------------");
-}
+};
 
 
-var logName = log.bind(person); // BIND - new function was created
+const logName = log.bind(person); // BIND - new function was created
 logName("en");
 
 log.call(person, "en", "es");
 log.apply(person, ["en", "es"]);
 
 
-var person2 = {
+const person2 = {
     first: "Jane",
     last: "Doe"
-}
+};
 
 person.fullName.apply(person2);
 
@@ -236,7 +232,7 @@ function multiply(a, b){
     return a * b;
 }
 
-var multiplyByTwo = multiply.bind(this, 2); //.....bind(this, 2, 2) -> 4;
+const multiplyByTwo = multiply.bind(this, 2); //.....bind(this, 2, 2) -> 4;
 console.log(multiplyByTwo(4));
 
 console.log("----------------");
@@ -248,8 +244,8 @@ console.log("----------------");
 
 function mapForEach(arr, fn){
     
-  var newArr = [];
-    for (var i = 0; i < arr.length; i++){
+  const newArr = [];
+    for (let i = 0; i < arr.length; i++){
         newArr.push(
         fn(arr[i])
         )
@@ -260,45 +256,36 @@ function mapForEach(arr, fn){
 
 
 
-var arr1 = [1, 2, 3];
+const arr1 = [1, 2, 3];
 console.log(arr1);
 
-var arr2 = mapForEach(arr1, function(item){
-    return item * 2;
-});
+const arr2 = mapForEach(arr1, item => item * 2);
 console.log(arr2);
 
 
 
-var limit = function(limiter, item){
-    return item > limiter;
-}
+const limit = (limiter, item) => item > limiter;
 
 
-var arr4 = mapForEach(arr1, limit.bind(this, 1));
+const arr4 = mapForEach(arr1, limit.bind(this, 1));
 console.log(arr4);
 
 
 
-var limitS = function(limiter){
-    return function(limiter, item){
-        return item > limiter;
-    }.bind(this, limiter);
-}
+const limitS = function(limiter){
+    return (limiter, item) => item > limiter;
+};
 
 
-var arr5 = mapForEach(arr1, limitS(2));
+const arr5 = mapForEach(arr1, limitS(2));
 console.log(arr5);
 
 
 
 
 /* UNDERSCORE 
-
 var arr6 = _.map(arr1, function(item){ return item * 3});
 console.log(arr6);
-
 var arr7 = _.filter([2, 3, 4, 5, 6, 7], function(item){ return item % 2 === 0});
 console.log(arr7);
 */
-
