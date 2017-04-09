@@ -10,13 +10,13 @@ if (a === undefined){
 
 
 
-   var o = {
+   const o = {
         first: "Filip"
-    }
+    };
 
    console.log(JSON.stringify(o));
 
-var JSONvalue = JSON.parse(`{"first": "Filip"}`);
+const JSONvalue = JSON.parse(`{"first": "Filip"}`);
 console.log(JSONvalue);
 
 
@@ -24,7 +24,7 @@ console.log(JSONvalue);
 
 console.log("-------------");
 //*------------------------------------------4-----------------------------------------*/
-var Filip = {
+const Filip = {
     first: "Filip",
     last: "Vabrousek",
     
@@ -38,7 +38,7 @@ var Filip = {
 
 
 function greet(person){
-    console.log("Hi " + person.first);
+    console.log(`Hi ${person.first}`);
     
 }
 
@@ -63,7 +63,7 @@ console.log("-------------");
    a();
 }
 
-log(function(){
+log(() => {
     console.log("hi");
 });
 
@@ -85,7 +85,7 @@ console.log(b); //3
 
 //---BY REFRENCE (pointing at the same object in memory)
 var c = {greeting: "hi"};
-var d;
+let d;
 
 d = c;
 c.greeting = "Hello!";
@@ -127,15 +127,15 @@ b();
 var c = {
  name: "The c object",
 
-    log: function(){
-    var self = this;
+    log() {
+    const self = this;
         
     self.name = "Updated";
     console.log(self);
         
-    var setname = function(newname){
+    const setname = newname => {
         self.name = newname;
-    }
+    };
     setname("Updated again!");
     console.log(self);
 }
@@ -148,15 +148,15 @@ c.log();
 
 //ARRAY WITH FUNCTION INSIDE
 
-var arr = [1,
+const arr = [1,
            false,
            {
     name: "Filip",
     adress: "111 Main st." 
 },
            
-function(name){
-var g = "Hello ";
+name => {
+const g = "Hello ";
 console.log(g +  name);
            }
 ];
@@ -169,34 +169,28 @@ arr[3](arr[2].name);
 
 //ARGUMENTS AND SPREAD
 
-function gr(first, lang, ...other){
-    
-    lang = lang || "en";
-    
+function gr(first, lang="en", ...other) {
     if (arguments.length  === 0){
         console.log("no parameters");
         return;
     }
     console.log(first);
     console.log(lang);
-    console.log("arg 0 " + arguments[0]);
+    console.log(`arg 0 ${arguments[0]}`);
     console.log("------");
-    
 }
 gr("Filip");
 
 
 
 //FUNCTION OVERLOADING
-function G(name, lang){
-    lang = lang || "en";
-    
+function G(name, lang="en") {
     if (lang === "en"){
-        console.log("Hello " + name);
+        console.log(`Hello ${name}`);
     }
-    
+
     if (lang === "es"){
-        console.log("Holla " + name);
+        console.log(`Holla ${name}`);
     }
 }
 
