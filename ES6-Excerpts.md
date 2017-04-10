@@ -1,7 +1,6 @@
 # Chapter 2
 
 ```javascript
-
 var funcs = [];
 
 for (let i = 0; i < 5; i++) {
@@ -19,7 +18,7 @@ funcs[3]();		// 3 with LET, 5 with VAR
 	a.push( 4 );
 	console.log( a );		// [1,2,3,4]
 
-	a = 42;					// TypeError!
+	// a = 4				// TypeError!
 }
 
 
@@ -189,6 +188,8 @@ showraw`Hello\nWorld`;
 
 
 //Continue with chapter 2 - Arrow functions => 
+
+
 
 
 ```
