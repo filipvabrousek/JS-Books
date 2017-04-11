@@ -544,3 +544,215 @@ But it's the combination of Promises with generators that fully realizes the ben
 Right now, we can manage these interactions with the aide of various async libraries' runners, but JavaScript is eventually going to support this interaction pattern with dedicated syntax alone!
 
 (Promises examples are in the exam)
+
+
+
+
+
+# Chapter 5
+```javascript
+
+var buf = new ArrayBuffer(32);
+buf.byteLength;
+
+var arr = new Uint16Array(buf);
+arr.length;
+
+/*
+You can't use certain Array.prototype methods with TypedArrays that don't 
+make sense, such as the mutators (splice(..), push(..), etc.) and concat(..).
+*/
+
+
+
+
+var m = new Map();
+
+var x = {
+        id: 1
+    },
+    y = {
+        id: 2
+    };
+
+m.set(x, "foo");
+m.set(y, "bar");
+
+m.get(x); // "foo"
+m.get(y);
+
+
+m.delete(y);
+
+
+m.size;
+
+
+
+
+var m2 = new Map(m); // OR new Map( m.entries() );
+
+
+
+
+var x = {
+        id: 1
+    },
+    y = {
+        id: 2
+    };
+
+var m3 = new Map([
+    [x, "foo"],
+    [y, "bar"]
+]);
+
+m3.get(x); // "foo"
+m3.get(y); // "bar"
+
+
+
+
+var m4 = new Map();
+
+var x = {
+        id: 1
+    },
+    y = {
+        id: 2
+    };
+
+m4.set(x, "foo");
+m4.set(y, "bar");
+
+var vals = [...m4.entries()];
+
+vals[0][0] === x; // true
+vals[0][1]; // "foo"
+
+
+var keys = [...m4.keys()];
+
+keys[0] === x; // true
+keys[1] === y; // true
+m4.has(x);
+
+
+
+
+var m5 = new WeakMap();
+
+var x = {
+        id: 1
+    },
+    y = {
+        id: 2
+    },
+    z = {
+        id: 3
+    },
+    w = {
+        id: 4
+    };
+
+m5.set(x, y);
+
+x = null; // { id: 1 } is GC-eligible
+y = null; // { id: 2 } is GC-eligible
+// only because { id: 1 } is
+
+m5.set(z, w);
+
+w = null; // { id: 4 } is not GC-eligible
+
+
+
+
+/* unlike how Map(..) expects entries list (array of key/value arrays), 
+Set(..) expects a values list (array of values):
+*/
+
+var s = new Set();
+
+var x = {
+        id: 1
+    },
+    y = {
+        id: 2
+    };
+
+s.add(x);
+s.add(y);
+s.add(x);
+
+s.size; // 2
+
+s.delete(y);
+s.size; // 1
+
+s.clear();
+s.size; // 0
+
+s.has(x);
+
+var x = {
+        id: 1
+    },
+    y = {
+        id: 2
+    };
+
+var s = new Set([x, y]);
+
+
+
+
+var s2 = new Set();
+
+var x = {
+        id: 1
+    },
+    y = {
+        id: 2
+    };
+
+s2.add(x).add(y);
+
+var keys = [...s2.keys()],
+    vals = [...s2.values()],
+    entries = [...s2.entries()];
+
+keys[0] === x;
+keys[1] === y;
+
+vals[0] === x;
+vals[1] === y;
+
+entries[0][0] === x;
+entries[0][1] === x;
+entries[1][0] === y;
+entries[1][1] === y;
+
+
+
+
+var s3 = new WeakSet();
+
+var x = {
+        id: 1
+    },
+    y = {
+        id: 2
+    };
+
+s3.add(x);
+s3.add(y);
+
+x = null; // `x` is GC-eligible
+y = null; // `y` is GC-eligible
+
+/*
+WeakMaps are maps where the key (object) is weakly held, so that GC is free to collect the entry if it's the last reference to an object.
+WeakSets are sets where the value is weakly held, again so that GC can remove the entry if it's the last reference to that object.
+*/
+```
