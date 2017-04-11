@@ -533,3 +533,14 @@ console.log(gen.next());
 console.log(gen.next());
 console.log(gen.next());
 ```
+
+
+# Chapter 4
+
+Thankfully, ES6 adds Promises to address one of the major shortcomings of callbacks: lack of trust in predictable behavior. Promises represent the future completion value from a potentially async task, normalizing behavior across sync and async boundaries.
+
+But it's the combination of Promises with generators that fully realizes the benefits of rearranging our async flow control code to de-emphasize and abstract away that ugly callback soup (aka "hell").
+
+Right now, we can manage these interactions with the aide of various async libraries' runners, but JavaScript is eventually going to support this interaction pattern with dedicated syntax alone!
+
+(Promises examples are in the exam)
