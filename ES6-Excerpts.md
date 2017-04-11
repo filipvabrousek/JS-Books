@@ -138,10 +138,11 @@ o2.foo();		// o1:foo
 				// o2:foo
 
 
+//Arrow functions
+//The longer the function, the less => helps; the shorter the function, the more => can shine.
 
-
-function dollabillsyall(strings, ...values) {
-	return strings.reduce( function(s,v,idx){
+var dollabillsyall = (strings, ...values) =>
+	strings.reduce( (s,v,idx) => {
 		if (idx > 0) {
 			if (typeof values[idx-1] == "number") {
 				// look, also using interpolated
@@ -155,7 +156,6 @@ function dollabillsyall(strings, ...values) {
 
 		return s + v;
 	}, "" );
-}
 
 var amt1 = 11.99,
 	amt2 = amt1 * 1.08,
@@ -187,9 +187,83 @@ showraw`Hello\nWorld`;
 
 
 
-//Continue with chapter 2 - Arrow functions => 
+//Arrow functions
+
+//------14 35------
+
+var re1 = /foo/,
+	str = "++foo++";
+
+re1.lastIndex;			// 0
+re1.test( str );		// true
+re1.lastIndex;			// 0 -- not updated
+
+re1.lastIndex = 4;
+re1.test( str );		// true -- ignored `lastIndex`
+re1.lastIndex;			// 4 -- not updated
 
 
 
+
+
+var re = /f../y,
+	str = "foo       far       fad";
+
+str.match( re );		// ["foo"]
+
+re.lastIndex = 10;
+str.match( re );		// ["far"]
+
+re.lastIndex = 20;
+str.match( re );		// ["fad"]
+
+
+
+
+var re2 = /o+./g,		// <-- look, `g`!
+	str = "foot book more";
+
+re2.exec( str );			// ["oot"]
+re2.lastIndex;			// 4
+
+re2.exec( str );			// ["ook"]
+re2.lastIndex;			// 9
+
+re2.exec( str );			// ["or"]
+re2.lastIndex;			// 13
+
+re2.exec( str );			// null -- no more matches!
+re2.lastIndex;			// 0 -- starts over now!
+
+var s1 = "\xE9";
+s1.normalize().length;	
+
+
+
+
+var o = {};
+
+for (o.a of [1,2,3]) {
+	console.log( o.a );
+}
+// 1 2 3
+
+for ({x: o.a} of [ {x: 1}, {x: 2}, {x: 3} ]) {
+  console.log( o.a );
+}
+// 1 2 3
+
+
+
+var \u03A9 = 42;
+// same as: var Ω = 42;
+
+var \u{2B400} = 42;
+// same as: var 𫐀 = 42;
+
+
+
+var sym = Symbol( "some optional description" );
+typeof sym;	
 
 ```
