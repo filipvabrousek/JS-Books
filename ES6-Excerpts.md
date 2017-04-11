@@ -500,9 +500,9 @@ Classes provide cleaner syntax around prototype-based coding. The addition of su
 
 
 ```
+## From the exam
 ```javascript
 
-//From the exam
 /*--------------------ITERATORS-------------------*/
 var arr = [4, 5, 6, 7, 8, 9];
 
