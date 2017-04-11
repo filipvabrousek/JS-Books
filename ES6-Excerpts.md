@@ -267,3 +267,12 @@ var sym = Symbol( "some optional description" );
 typeof sym;	
 
 ```
+
+
+
+# Chapter 3
+```javascript
+
+...
+
+```
