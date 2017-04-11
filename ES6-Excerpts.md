@@ -756,3 +756,212 @@ WeakMaps are maps where the key (object) is weakly held, so that GC is free to c
 WeakSets are sets where the value is weakly held, again so that GC can remove the entry if it's the last reference to that object.
 */
 ```
+
+
+# Chapter 6
+
+
+```javascript
+var arrLike = {
+    length: 4,
+    2: "foo"
+};
+
+Array.from(arrLike);
+// [ undefined, undefined, "foo", undefined ]
+
+var c = Array.from({
+    length: 4
+}); // four `undefined` values
+
+
+
+
+var arrLike2 = {
+    length: 4,
+    2: "foo"
+};
+
+Array.from(arrLike2, function mapper(val, idx) {
+    if (typeof val == "string") {
+        return val.toUpperCase();
+    } else {
+        return idx;
+    }
+});
+// [ 0, 1, "FOO", 3 ]
+
+
+
+
+class MyCoolArray extends Array {
+    // force `species` to be parent constructor
+    static get[Symbol.species]() {
+        return Array;
+    }
+}
+
+var x = new MyCoolArray(1, 2, 3);
+
+MyCoolArray.from(x) instanceof MyCoolArray; // true
+MyCoolArray.of([2, 3]) instanceof MyCoolArray; // true
+
+
+
+
+[1, 2, 3, 4, 5].copyWithin(3, 0); // [1,2,3,1,2]
+
+[1, 2, 3, 4, 5].copyWithin(3, 0, 1); // [1,2,3,1,5]
+
+[1, 2, 3, 4, 5].copyWithin(0, -2); // [4,5,3,4,5]
+
+[1, 2, 3, 4, 5].copyWithin(0, -2, -1); // [4,2,3,4,5]
+
+
+
+
+var x = NaN,
+    y = 0,
+    z = -0;
+
+x === x; // false
+y === z; // true
+
+Object.is(x, x); // true
+Object.is(y, z); // false
+
+
+
+
+var o = {
+    foo: 42,
+    [Symbol("bar")]: "hello world",
+    baz: true
+};
+
+Object.getOwnPropertySymbols(o); // [ Symbol(bar) ]
+
+
+
+
+var o1 = {
+    foo() {
+        console.log("foo");
+    }
+};
+var o2 = {
+    // .. o2's definition ..
+};
+
+Object.setPrototypeOf(o2, o1);
+
+// delegates to `o1.foo()`
+o2.foo(); // foo
+
+
+
+
+var o1 = {
+    foo() {
+        console.log("foo");
+    }
+};
+
+var o2 = Object.assign(
+    Object.create(o1), {
+        // .. o2's definition ..
+    }
+);
+
+// delegates to `o1.foo()`
+o2.foo(); // foo
+
+
+
+
+// New Math functions
+
+//Trigonometry
+Math.cosh(8);
+Math.acosh(8);
+Math.sinh(8);
+Math.asinh(8);
+Math.tanh(8);
+Math.atanh(8);
+Math.hypot(8);
+
+
+//Arithmetic
+Math.cbrt(8);
+Math.clz32(8);
+Math.expm1(8);
+Math.log2(8);
+Math.log(10);
+Math.log1p(8);
+Math.imul(8);
+
+//Meta
+Math.sign(8);
+Math.trunc(8.8); //8
+Math.fround(8.8); //9
+
+
+Number.EPSILON;
+Number.MAX_SAFE_INTEGER;
+Number.MIN_SAFE_INTEGER;
+
+
+
+
+var a = NaN,
+    b = "NaN",
+    c = 42;
+
+isNaN(a); // true
+isNaN(b); // true -- oops!
+isNaN(c); // false
+
+Number.isNaN(a); // true
+Number.isNaN(b); // false -- fixed!
+Number.isNaN(c); // false
+
+
+var a = NaN,
+    b = Infinity,
+    c = 42;
+
+Number.isFinite(a); // false
+Number.isFinite(b); // false
+Number.isFinite(c); // true
+
+
+
+var a = "42";
+
+isFinite(a); // true
+Number.isFinite(a); // false
+
+Number.isInteger(4.2); // false
+
+
+var x = Math.pow(2, 53);
+Number.isSafeInteger(x - 1);
+
+
+
+
+String.fromCodePoint(0x1d49e); // "𝒞"
+"ab𝒞d".codePointAt(2).toString(16); // "1d49e"
+
+
+var palindrome = "step on no pets";
+
+palindrome.startsWith("step on"); // true
+palindrome.startsWith("on", 5); // true
+
+palindrome.endsWith("no pets"); // true
+palindrome.endsWith("no", 10); // true
+
+palindrome.includes("on"); // true
+palindrome.includes("on", 6); // false
+```
