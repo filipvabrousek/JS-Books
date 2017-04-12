@@ -251,10 +251,6 @@ var \u{2B400} = 42;
 var sym = Symbol( "some optional description" );
 typeof sym;	
 
-
-var sym = Symbol( "some optional description" );
-typeof sym;
-
 ```
 
 
