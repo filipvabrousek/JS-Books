@@ -927,3 +927,206 @@ palindrome.endsWith("no", 10); // true
 palindrome.includes("on"); // true
 palindrome.includes("on", 6); // false
 ```
+
+
+
+
+
+```javascript
+var abc = function() {
+    // ..
+};
+
+abc.name; // "abc"
+
+
+
+
+function Foo(greeting) {
+    this.greeting = greeting;
+}
+
+Foo.prototype[Symbol.toStringTag] = "Foo";
+
+Object.defineProperty(Foo, Symbol.hasInstance, {
+    value: function(inst) {
+        return inst.greeting == "hello";
+    }
+});
+
+var a = new Foo("hello"),
+    b = new Foo("world");
+
+b[Symbol.toStringTag] = "cool";
+
+a.toString(); // [object Foo]
+String(b); // [object cool]
+
+a instanceof Foo; // true
+b instanceof Foo; // false
+
+
+
+
+class Cool {
+    // defer `@@species` to derived constructor
+    static get[Symbol.species]() {
+        return this;
+    }
+
+    again() {
+        return new this.constructor[Symbol.species]();
+    }
+}
+
+class Fun extends Cool {}
+
+class Awesome extends Cool {
+    // force `@@species` to be parent constructor
+    static get[Symbol.species]() {
+        return Cool;
+    }
+}
+
+var a = new Fun(),
+    b = new Awesome(),
+    c = a.again(),
+    d = b.again();
+
+c instanceof Fun; // true
+d instanceof Awesome; // false
+d instanceof Cool; // true
+
+
+
+
+var arr = [1, 2, 3, 4, 5];
+
+arr + 10; // 1,2,3,4,510
+
+arr[Symbol.toPrimitive] = function(hint) {
+    if (hint == "default" || hint == "number") {
+        // sum all numbers
+        return this.reduce(function(acc, curr) {
+            return acc + curr;
+        }, 0);
+    }
+};
+
+arr + 10; // 25
+
+
+
+
+// note: target === obj,
+// context === pobj
+
+var obj = {
+        a: 1
+    },
+    handlers = {
+        get(target, key, context) {
+            console.log("accessing: ", key);
+            return Reflect.get(target, key, context);
+        }
+    },
+    pobj = new Proxy(obj, handlers);
+
+obj.a;
+// 1
+
+pobj.a;
+// accessing: a
+// 1
+
+
+
+
+var obj = {
+        a: 1
+    },
+    handlers = {
+        get(target, key, context) {
+            // note: target === obj,
+            // context === pobj
+            console.log("accessing: ", key);
+            return target[key];
+        }
+    },
+    {
+        proxy: pobj,
+        revoke: prevoke
+    } =
+    Proxy.revocable(obj, handlers);
+
+pobj.a;
+// accessing: a
+// 1
+
+// later:
+prevoke();
+
+//pobj.a;
+// TypeError
+
+
+
+
+var handlers = {
+        get(target, key, context) {
+            return function() {
+                context.speak(key + "!");
+            };
+        }
+    },
+    catchall = new Proxy({}, handlers),
+    greeter = {
+        speak(who = "someone") {
+            console.log("hello", who);
+        }
+    };
+
+// setup `greeter` to fall back to `catchall`
+Object.setPrototypeOf(greeter, catchall);
+
+greeter.speak(); // hello someone
+greeter.speak("world"); // hello world
+
+greeter.everyone(); // hello everyone!
+
+
+
+
+"use strict";
+
+function foo(x) {
+    return x * 2;
+}
+
+function bar(x) {
+    x = x + 1;
+    if (x > 10) {
+        return foo(x);
+    } else {
+        return bar(x + 1);
+    }
+}
+
+bar(5); // 24
+bar(15); // 32
+
+
+
+"use strict";
+
+try {
+    (function foo(x) {
+        if (x < 5E5) return foo(x + 1);
+    })(1);
+
+    TCO_ENABLED = true;
+} catch (err) {
+    TCO_ENABLED = false;
+}
+// + get/set + proxies - spread to more IN DEPTH questions
+```
