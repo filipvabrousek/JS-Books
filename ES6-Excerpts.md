@@ -17,8 +17,7 @@ funcs[3]();		// 3 with LET, 5 with VAR
 	const a = [1,2,3];
 	a.push( 4 );
 	console.log( a );		// [1,2,3,4]
-
-	// a = 4				// TypeError!
+    // a = 4				// TypeError!
 }
 
 
@@ -26,24 +25,17 @@ funcs[3]();		// 3 with LET, 5 with VAR
 
 
 
-// doing things the new ES6 way
+// !!!!! ES5 !!!!!!!!!!!!
 function foo(...args) {
-	// `args` is already a real array
 
-	// discard first element in `args`
 	args.shift();
-
-	// pass along all of `args` as arguments
-	// to `console.log(..)`
 	console.log( ...args );
 }
 
 // doing things the old-school pre-ES6 way
 function bar() {
-	// turn `arguments` into a real array
-	var args = Array.prototype.slice.call( arguments );
 
-	// add some elements on the end
+	var args = Array.prototype.slice.call( arguments );
 	args.push( 4, 5 );
 
 	// filter out odd numbers
@@ -66,15 +58,15 @@ bar( 0, 1, 2, 3 );					// 2 4
 
 
 
-function foo(x,y) {
+function fooB(x,y) {
 	x = (0 in arguments) ? x : 11;
 	y = (1 in arguments) ? y : 31;
 
 	console.log( x + y );
 }
 
-foo( 5 );				// 36
-foo( 5, undefined );	// NaN
+fooB( 5 );				// 36
+fooB( 5, undefined );	// NaN
 
 
 
@@ -87,17 +79,17 @@ function bar(val) {
 	return y + val;
 }
 
-function foo(x = y + 3, z = bar( x )) {
+function fooC(x = y + 3, z = bar( x )) {
 	console.log( x, z );
 }
 
 var y = 5;
-foo();								// "bar called"
+fooC();								// "bar called"
 									// 8 13
-foo( 10 );							// "bar called"
+fooC( 10 );							// "bar called"
 									// 10 15
 y = 6;
-foo( undefined, 10 );				// 9 10
+fooC( undefined, 10 );				// 9 10
 
 
 
@@ -105,13 +97,13 @@ foo( undefined, 10 );				// 9 10
 
 
 // NOT CLEAR!!!!!
-function foo( x =
+function fooD( x =
 	(function(v){ return v + 11; })( 31 )
 ) {
 	console.log( x );
 }
 
-foo();			// 42
+fooD();			// 42
 
 
 
@@ -139,7 +131,7 @@ o2.foo();		// o1:foo
 
 
 //Arrow functions
-//The longer the function, the less => helps; the shorter the function, the more => can shine.
+//the longer the function, the less => helps; the shorter the function, the more => can shine
 
 var dollabillsyall = (strings, ...values) =>
 	strings.reduce( (s,v,idx) => {
@@ -261,10 +253,12 @@ var \u03A9 = 42;
 var \u{2B400} = 42;
 // same as: var 𫐀 = 42;
 
+var sym = Symbol( "some optional description" );
+typeof sym;	
 
 
 var sym = Symbol( "some optional description" );
-typeof sym;	
+typeof sym;
 
 ```
 
