@@ -268,129 +268,124 @@ typeof sym;
 ```javascript
 
 var greeting = "hello world";
+var ita = greeting[Symbol.iterator]();
 
-var it = greeting[Symbol.iterator]();
-
-it.next();		// { value: "h", done: false }
-it.next();		// { value: "e", done: false }
+ita.next(); // { value: "h", done: false }
+ita.next(); // { value: "e", done: false }
 
 
 var m = new Map();
-m.set( "foo", 42 );
-m.set( { cool: true }, "hello world" );
+m.set("foo", 42);
+m.set({
+    cool: true
+}, "hello world");
 
-var it1 = m[Symbol.iterator]();
-var it2 = m.entries();
+var itb = m[Symbol.iterator]();
+var itb = m.entries();
 
-it1.next();		// { value: [ "foo", 42 ], done: false }
-it2.next();		// { value: [ "foo", 42 ], done: false }
+itb.next(); // { value: [ "foo", 42 ], done: false }
+itb.next(); // { value: [ "foo", 42 ], done: false }
 
 
 
+
+/*------------------------------------------TASKS------------------------------------------*/
 var tasks = {
-	[Symbol.iterator]() {
-		var steps = this.actions.slice();
+    [Symbol.iterator]() {
+        var steps = this.actions.slice();
 
-		return {
-			// make the iterator an iterable
-			[Symbol.iterator]() { return this; },
+        return {
+            // make the iterator an iterable
+            [Symbol.iterator]() {
+                return this;
+            },
 
-			next(...args) {
-				if (steps.length > 0) {
-					let res = steps.shift()( ...args );
-					return { value: res, done: false };
-				}
-				else {
-					return { done: true }
-				}
-			},
+            next(...args) {
+                if (steps.length > 0) {
+                    let res = steps.shift()(...args);
+                    return {
+                        value: res,
+                        done: false
+                    };
+                } else {
+                    return {
+                        done: true
+                    }
+                }
+            },
 
-			return(v) {
-				steps.length = 0;
-				return { value: v, done: true };
-			}
-		};
-	},
-	actions: []
+            return (v) {
+                steps.length = 0;
+                return {
+                    value: v,
+                    done: true
+                };
+            }
+        };
+    },
+    actions: []
 };
 
 
 
 
-
-
-
-
-
-
-
-
 tasks.actions.push(
-	function step1(x){
-		console.log( "step 1:", x );
-		return x * 2;
-	},
-	function step2(x,y){
-		console.log( "step 2:", x, y );
-		return x + (y * 2);
-	},
-	function step3(x,y,z){
-		console.log( "step 3:", x, y, z );
-		return (x * y) + z;
-	}
+    function step1(x) {
+        console.log("step 1:", x);
+        return x * 2;
+    },
+    function step2(x, y) {
+        console.log("step 2:", x, y);
+        return x + (y * 2);
+    },
+    function step3(x, y, z) {
+        console.log("step 3:", x, y, z);
+        return (x * y) + z;
+    }
 );
 
-var it = tasks[Symbol.iterator]();
+var itc = tasks[Symbol.iterator]();
 
-it.next( 10 );			// step 1: 10
-						// { value:   20, done: false }
-
-it.next( 20, 50 );		// step 2: 20 50
-						// { value:  120, done: false }
-
-it.next( 20, 50, 120 );	// step 3: 20 50 120
-						// { value: 1120, done: false }
-
-it.next();				// { done: true }
+itc.next(10); // step 1: 10 // { value:   20, done: false }
+itc.next(20, 50); // step 2: 20 50 // { value:  120, done: false }
+itc.next(20, 50, 120); // step 3: 20 50 120 // { value: 1120, done: false }
+itc.next(); // { done: true }
 
 
 
 
+/*------------------------------------------GENERATORS------------------------------------------*/
+var a = [1, 2, 3, 4, 5];
+var itd = a[Symbol.iterator]();
 
-
-
-var a = [1,2,3,4,5];
-
-var it = a[Symbol.iterator]();
-
-var [x,y] = it;			// take just the first two elements from `it`
-var [z, ...w] = it;		// take the third, then the rest all at once
+var [x, y] = itd; // take just the first two elements from `it`
+var [z, ...w] = itd; // take the third, then the rest all at once
 
 // is `it` fully exhausted? Yep.
-it.next();				// { value: undefined, done: true }
+itd.next(); // { value: undefined, done: true }
 
-x;						// 1
-y;						// 2
-z;						// 3
-w;						// [4,5]
-
-
+x; // 1
+y; // 2
+z; // 3
+w; // [4,5]
 
 
-function *foo() {
-	yield 1;
-	yield 2;
-	yield 3;
-	return 4;
+
+
+function* foo() {
+    yield 1;
+    yield 2;
+    yield 3;
+    return 4;
 }
 
-function *bar() {
-	var x = yield *foo();
-	console.log( "x:", x );
+function* bar() {
+    var x = yield* foo();
+    console.log("x:", x);
 }
 
 for (var v of bar()) {
-	console.log( v );
+    console.log(v);
 }
 // 1 2 3
 // x: 4
@@ -408,62 +403,52 @@ Queue of tasks to perform serially: This usage often represents flow control for
 
 
 
-function *foo2() {
-	try {
-		yield 1;
-		yield 2;
-		yield 3;
-	}
-	finally {
-		console.log( "cleanup!" );
-	}
+function* foo2() {
+    try {
+        yield 1;
+        yield 2;
+        yield 3;
+    } finally {
+        console.log("cleanup!");
+    }
 }
 
 for (var v of foo2()) {
-	console.log( v );
+    console.log(v);
 }
 // 1 2 3
 // cleanup!
 
-var it = foo2();
+var ite = foo2();
 
-it.next();				// { value: 1, done: false }
-it.return( 42 );		// cleanup!
-						// { value: 42, done: true }
-
-
+ite.next(); // { value: 1, done: false }
+ite.return(42); // cleanup!
+// { value: 42, done: true }
 
 
 
 
+function* foo3() {
+    try {
+        yield 1;
+    } catch (err) {
+        console.log(err);
+    }
 
-
-function *foo3() {
-	try {
-		yield 1;
-	}
-	catch (err) {
-		console.log( err );
-	}
-
-	yield 2;
-
-	throw "Hello!";
+    yield 2;
+    throw "Hello!";
 }
 
-var it = foo3();
+var itf = foo3();
+itf.next(); // { value: 1, done: false }
 
-it.next();				// { value: 1, done: false }
 
 try {
-	it.throw( "Hi!" );	// Hi!
-						// { value: 2, done: false }
-	it.next();
-
-	console.log( "never gets here" );
-}
-catch (err) {
-	console.log( err );	// Hello!
+    itf.throw("Hi!"); // Hi!	// { value: 2, done: false }
+    itf.next();
+    console.log("never gets here");
+} catch (err) {
+    console.log(err); // Hello!
 }
 
 
@@ -476,23 +461,6 @@ Modules allow private encapsulation of implementation details with a publicly ex
 
 Classes provide cleaner syntax around prototype-based coding. The addition of super also solves tricky issues with relative references in the [[Prototype]] chain.
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ```
 ## From the exam
 ```javascript
