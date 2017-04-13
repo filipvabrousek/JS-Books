@@ -925,9 +925,18 @@ palindrome.endsWith("no", 10); // true
 palindrome.includes("on"); // true
 palindrome.includes("on", 6); // false
 
+const obj = {
+  log: ['test'],
+  get latest() {
+    if (this.log.length == 0) return undefined;
+    return this.log[this.log.length - 1];
+  }
+};
+console.log(obj.latest); // Will return "test".
 
-
-
+```
+# Chapter 7
+```javascript
 
 
 
