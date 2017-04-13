@@ -1124,94 +1124,66 @@ try {
 
 
 
-# Chapter 8 - Errors!!!!
+# Chapter 8 - (might change)
 ```javascript
 
-var obj = {
-    a: 1,
-    b: 2
-};
+var a = 2;
 
-Object.observe(
-    obj,
-    function(changes) {
-        for (var change of changes) {
-            console.log(change);
-        }
-    }, ["add", "update", "delete"]
-);
+a ** 4;			// Math.pow( a, 4 ) == 16
 
-obj.c = 3;
-// { name: "c", object: obj, type: "add" }
-
-obj.a = 42;
-// { name: "a", object: obj, type: "update", oldValue: 1 }
-
-delete obj.b;
-// { name: "b", object: obj, type: "delete", oldValue: 2 }
+a **= 3;		// a = Math.pow( a, 3 )
+a;				// 8
 
 
 
 
-function observer(changes) {
-    for (var change of changes) {
-        if (change.type == "recalc") {
-            change.object.c =
-                change.object.oldValue +
-                change.object.a +
-                change.object.b;
-        }
-    }
+async function request(url) {
+	var resp = await (
+		new Promise( function(resolve,reject){
+			var xhr = new XMLHttpRequest();
+			xhr.open( "GET", url );
+			xhr.onreadystatechange = function(){
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+						resolve( xhr );
+					}
+					else {
+						reject( xhr.statusText );
+					}
+				}
+			};
+			xhr.send();
+		} )
+	);
+
+	return resp.responseText;
 }
 
-function changeObj(a, b) {
-    var notifier = Object.getNotifier(obj);
+var pr = request( "https://some.url.1" );
 
-    obj.a = a * 2;
-    obj.b = b * 3;
-
-    // queue up change events into a set
-    notifier.notify({
-        type: "recalc",
-        name: "c",
-        oldValue: obj.c
-    });
-}
-
-var obj = {
-    a: 1,
-    b: 2,
-    c: 3
-};
-
-Object.observe(
-    obj,
-    observer, ["recalc"]
+pr.then(
+	function fulfilled(responseText){
+		// ajax success
+	},
+	function rejected(reason){
+		// Oops, something went wrong
+	}
 );
 
-changeObj(3, 11);
-
-obj.a; // 12
-obj.b; // 30
-obj.c; // 3
 
 
 
 
-var obj = {
-    a: 1,
-    b: 2
-};
 
-Object.observe(obj, function observer(changes) {
-    for (var change of changes) {
-        if (change.type == "setPrototype") {
-            Object.unobserve(
-                change.object, observer
-            );
-            break;
-        }
-    }
-});
+var vals = [ "foo", "bar", 42, "baz" ];
+
+if (~vals.indexOf( 42 )) {
+	// found it!
+}
+
+
+/*
+The reason for the >= 0 check is because indexOf(..) returns a numeric value of 0 or greater if found, or -1 if not found. In other words, we're using an index-returning function in a boolean context. But because -1 is truthy instead of falsy, we have to be more manual with our checks.
+*/
 
 ```
