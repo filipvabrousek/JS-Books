@@ -762,7 +762,7 @@ var x = new coolArray(1, 2, 3);
 var mapped = x.map(x => x*x);
 console.log(mapped);
 
-console.log(mapped instanceof MyArray); // false
+console.log(mapped instanceof coolArray); // false
 console.log(mapped instanceof Array);   // true
 
 
@@ -924,13 +924,13 @@ palindrome.endsWith("no", 10); // true
 
 palindrome.includes("on"); // true
 palindrome.includes("on", 6); // false
-```
 
 
 
 
 
-```javascript
+
+
 var abc = function() {
     // ..
 };
