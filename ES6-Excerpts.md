@@ -747,17 +747,24 @@ Array.from(arrLike2, function mapper(val, idx) {
 
 
 
-class MyCoolArray extends Array {
-    // force `species` to be parent constructor
-    static get[Symbol.species]() {
+/* Overwrite species to the parent Array constructor
+For example, when using methods such as map() that return the default constructor,
+you want these methods to return a parent Array object, instead of the MyArray object.
+*/
+
+class coolArray extends Array{
+    static get[Symbol.species](){
         return Array;
     }
 }
 
-var x = new MyCoolArray(1, 2, 3);
+var x = new coolArray(1, 2, 3);
+var mapped = x.map(x => x*x);
+console.log(mapped);
 
-MyCoolArray.from(x) instanceof MyCoolArray; // true
-MyCoolArray.of([2, 3]) instanceof MyCoolArray; // true
+console.log(mapped instanceof MyArray); // false
+console.log(mapped instanceof Array);   // true
+
 
 
 
