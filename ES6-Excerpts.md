@@ -17,7 +17,7 @@ funcs[3]();		// 3 with LET, 5 with VAR
 	const a = [1,2,3];
 	a.push( 4 );
 	console.log( a );		// [1,2,3,4]
-    // a = 4				// TypeError!
+        // a = 4			// TypeError!
 }
 
 
