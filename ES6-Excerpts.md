@@ -24,31 +24,26 @@ funcs[3]();		// 3 with LET, 5 with VAR
 
 
 
-
-// !!!!! ES5 !!!!!!!!!!!!
 function foo(...args) {
 
 	args.shift();
 	console.log( ...args );
 }
 
-// doing things the old-school pre-ES6 way
 function bar() {
 
-	var args = Array.prototype.slice.call( arguments );
+	let args = Array.prototype.slice.call( arguments );
 	args.push( 4, 5 );
 
 	// filter out odd numbers
-	args = args.filter( function(v){
-		return v % 2 == 0;
-	} );
+	args = args.filter( v => v % 2 == 0 );
 
 	// pass along all of `args` as arguments
 	// to `foo(..)`
-	foo.apply( null, args );
+	foo(...args);
 }
 
-bar( 0, 1, 2, 3 );					// 2 4
+bar( 0, 1, 2, 3 );				// 2 4
 
 
 
