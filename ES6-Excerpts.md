@@ -485,6 +485,17 @@ console.log(gen.next());
 console.log(gen.next());
 console.log(gen.next());
 console.log(gen.next());
+
+
+//New addition
+const n = [65, 44, 12, 4];
+
+function sum(total, num) {
+    return total + num;
+}
+
+console.log(n.reduce(sum));
+
 ```
 
 
