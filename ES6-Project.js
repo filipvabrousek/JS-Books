@@ -1,69 +1,97 @@
-const UICtrl = (() =>{
-   
-const DOMStrings = {
-    desc:"#desc",
-    dist: "#dist",
-    btn: "button" ,
-    run: ".run",
-    bike: ".bike",
-    swim: ".swim",
-    data: "#data-list",
-    select: "#s",
-    sum: "h2"
-    
-};
-    
-    
-const S = (e) => {
-   return document.querySelector(e);
-}
-  
-let changedType;
-      
-S(DOMStrings.select).addEventListener("change", ()=> {
-   changedType = S(DOMStrings.select).value;
-    return changedType;
-});
-    
-    
+const UICtrl = (() => {
 
+    const DOMStrings = {
+        desc: "#desc",
+        dist: "#dist",
+        btn: "button",
+        run: ".run",
+        bike: ".bike",
+        swim: ".swim",
+        data: "#data-list",
+        select: "#s",
+        sum: "h2"
+
+    };
+
+
+    const S = (e) => {
+        return document.querySelector(e);
+    }
+
+    let changedType = "Run";
+
+
+    /*---------------------------------------CHANGED TYPE--------------------------------*/
+    S(DOMStrings.select).addEventListener("change", () => {
+        changedType = S(DOMStrings.select).value;
+        return changedType;
+    });
+
+
+
+    /*---------------------------------------ACTIVITY CLASS--------------------------------*/
+    class Activity {
+        constructor(type, title, distance) {
+            this.type = type;
+            this.title = title;
+            this.distance = distance;
+        }
+    }
+
+    //Simulated data
+    let type = "Run";
+    let title = "My nice run";
+    let distance = 17;
+    let sum = 0;
+
+    /*
 let title = S(DOMStrings.desc).value;
 let distance = S(DOMStrings.dist).value;
-let sum = 0;
-    
-const add =() =>{
-    
-    let html;
-    if (changedType === "Run"){
-         html = `<div class="run">` + title + " Run" + " (" + distance + " km)" + `</div>`; 
-    } else if (changedType === "Bike"){
-        html = `<div class="bike">`+ title + " Bike" + " (" + distance + " km )" +`</div>`;  
-    } else if (changedType === "Swim"){
-         html = `<div class="swim">`+ title + " Swim" + " (" + distance + "km )" + `</div>`;
+let type = changedType;
+   */
+
+    let a;
+
+    /*-----------------------------------ADD ITEM TOT THE UI (WILL BE SOLVED)--------------------*/
+    const addList = () => {
+
+        let html;
+
+        a = new Activity(type, title, distance);
+
+        if (changedType === "Run") {
+            html = "<h2>" + a.distance + " " + a.type + " " + a.title + "</h2>";
+        } else if (changedType === "Bike") {
+            html = "<h2>" + a.distance + " " + a.type + " " + a.title + "</h2>";
+        } else if (changedType === "Swim") {
+            html = "<h2>" + a.distance + " " + a.type + " " + a.title + "</h2>"
+        }
+
+
+        S(DOMStrings.data).insertAdjacentHTML("beforeend", html);
+        sum += Number(distance);
+        S(DOMStrings.sum).innerHTML = sum;
     }
-  
 
-S(DOMStrings.data).insertAdjacentHTML("beforeend", html);
-sum += Number(distance);
-    
-S(DOMStrings.sum).innerHTML = sum;
-}  
-    
-const addEL = () =>{
-    S(DOMStrings.btn).addEventListener("click", add);
-}  
-    
 
-const init = () =>{
-    console.log("App has started");
-    addEL();
-}
-    return{
-      S,
-    add,
-    addEL,
-    init
-        
+    const addEL = () => {
+        S(DOMStrings.btn).addEventListener("click", addList);
+    }
+
+
+
+    const init = () => {
+        console.log("App has started");
+        addEL();
+    }
+
+
+    return {
+        S,
+        addEL,
+        init,
+        addList
+
     }
 })();
 
