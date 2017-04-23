@@ -22,10 +22,7 @@ const UICtrl = (() => {
 
 
     /*---------------------------------------CHANGED TYPE--------------------------------*/
-    S(DOMStrings.select).addEventListener("change", () => {
-        changedType = S(DOMStrings.select).value;
-        return changedType;
-    });
+
 
 
 
@@ -39,16 +36,15 @@ const UICtrl = (() => {
     }
 
     //Simulated data
-    let type = "Run";
-    let title = "My nice run";
-    let distance = 17;
+    /*
+     let type = "Run";
+     let title = "My nice run";
+     let distance = 17;
+     */
     let sum = 0;
 
-    /*
-let title = S(DOMStrings.desc).value;
-let distance = S(DOMStrings.dist).value;
-let type = changedType;
-   */
+
+
 
     let a;
 
@@ -56,6 +52,16 @@ let type = changedType;
     const addList = () => {
 
         let html;
+
+        S(DOMStrings.select).addEventListener("change", () => {
+            changedType = S(DOMStrings.select).value;
+            return changedType;
+        });
+        let type = changedType;
+
+        let title = S(DOMStrings.desc).value;
+        let distance = S(DOMStrings.dist).value;
+
 
         a = new Activity(type, title, distance);
 
@@ -97,7 +103,6 @@ let type = changedType;
 
 
 UICtrl.init();
-
 
 
 /*
