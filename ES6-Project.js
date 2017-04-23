@@ -20,12 +20,6 @@ const UICtrl = (() => {
 
     let changedType = "Run";
 
-
-    /*---------------------------------------CHANGED TYPE--------------------------------*/
-
-
-
-
     /*---------------------------------------ACTIVITY CLASS--------------------------------*/
     class Activity {
         constructor(type, title, distance) {
@@ -35,17 +29,8 @@ const UICtrl = (() => {
         }
     }
 
-    //Simulated data
-    /*
-     let type = "Run";
-     let title = "My nice run";
-     let distance = 17;
-     */
+
     let sum = 0;
-
-
-
-
     let a;
 
     /*-----------------------------------ADD ITEM TOT THE UI (WILL BE SOLVED)--------------------*/
@@ -66,11 +51,11 @@ const UICtrl = (() => {
         a = new Activity(type, title, distance);
 
         if (changedType === "Run") {
-            html = "<h2>" + a.distance + " " + a.type + " " + a.title + "</h2>";
+            html = `<h2>${a.distance} ${a.type} - ${a.title}</h2>`;
         } else if (changedType === "Bike") {
-            html = "<h2>" + a.distance + " " + a.type + " " + a.title + "</h2>";
+            html = `<h2>${a.distance} ${a.type} - ${a.title}</h2>`;
         } else if (changedType === "Swim") {
-            html = "<h2>" + a.distance + " " + a.type + " " + a.title + "</h2>"
+            html = `<h2>${a.distance} ${a.type} - ${a.title}</h2>`;
         }
 
 
