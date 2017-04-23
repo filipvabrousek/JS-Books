@@ -89,9 +89,7 @@ const UICtrl = (() => {
 
 UICtrl.init();
 
-
 /*
-
 <!DOCTYPE html>
 
 <head>
@@ -109,8 +107,8 @@ UICtrl.init();
 <input type="text" id="desc" placeholder="enter title" value="Initial title">
 <input type="number" id="dist" placeholder="enter distance" value = 1>
     
+    
 <select id="s">
-<option>Please select</option>
 <option>Run</option>  
 <option>Bike</option>
 <option>Swim</option>
@@ -140,7 +138,9 @@ Sum
     font-family: Arial;
     }
     
-    
+    h1{
+        text-align: center;
+    }
     
     input{
     padding: 20px;
@@ -169,9 +169,17 @@ Sum
     color: #fff;
     }
     
+    #data-input{
+        display: flex;
+        justify-content: center;
+    }
+    #data-input > *{
+      margin: 1em;
+    }
     
+
     
-    /*???????????*/
+
     .run{
          padding: 20px;
         background: "#8BC34A";
@@ -187,11 +195,11 @@ Sum
          padding: 20px;
         background: "#03A9F4";
     }
+    
+    
 </style>
 <script src="a.js"></script>
 </body>
-
-
 
 
 */
