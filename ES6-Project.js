@@ -9,7 +9,9 @@ const UICtrl = (() => {
         swim: ".swim",
         data: "#data-list",
         select: "#s",
-        sum: "h2"
+        rs: "#rs",
+        bs: "#bs",
+        ss: "#ss"
 
     };
 
@@ -30,10 +32,12 @@ const UICtrl = (() => {
     }
 
 
-    let sum = 0;
+    let runSum = 0;
+    let bikeSum = 0;
+    let swimSum = 0;
     let a;
 
-    /*-----------------------------------ADD ITEM TOT THE UI (WILL BE SOLVED)--------------------*/
+    /*-----------------------------------ADD ITEM TO THE UI (WILL BE SOLVED)--------------------*/
     const addList = () => {
 
         let html;
@@ -52,16 +56,22 @@ const UICtrl = (() => {
 
         if (changedType === "Run") {
             html = `<h2>${a.distance} ${a.type} - ${a.title}</h2>`;
+            runSum += Number(a.distance);
         } else if (changedType === "Bike") {
             html = `<h2>${a.distance} ${a.type} - ${a.title}</h2>`;
+            bikeSum += Number(a.distance);
         } else if (changedType === "Swim") {
             html = `<h2>${a.distance} ${a.type} - ${a.title}</h2>`;
+            swimSum += Number(a.distance);
         }
 
-
+ 
+        
         S(DOMStrings.data).insertAdjacentHTML("beforeend", html);
-        sum += Number(distance);
-        S(DOMStrings.sum).innerHTML = sum;
+        console.log(runSum);
+        S(DOMStrings.rs).innerHTML = `Run: ${runSum}`;
+        S(DOMStrings.bs).innerHTML = `Bike: ${bikeSum}`;
+        S(DOMStrings.ss).innerHTML = `Swim: ${swimSum}`;
     }
 
 
@@ -89,7 +99,11 @@ const UICtrl = (() => {
 
 UICtrl.init();
 
+//beginning 23.4.2017
+
+
 /*
+
 <!DOCTYPE html>
 
 <head>
@@ -116,9 +130,9 @@ UICtrl.init();
     
 <button>+</button>
     
-<h2>
-Sum    
-</h2>
+<h2 id="rs">Run sum</h2>
+<h2 id="bs">Run sum</h2>
+<h2 id="ss">Run sum</h2>
 </section>
     
     
@@ -200,6 +214,8 @@ Sum
 </style>
 <script src="a.js"></script>
 </body>
+
+
 
 
 */
