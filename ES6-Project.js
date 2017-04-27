@@ -55,13 +55,13 @@ const UICtrl = (() => {
         a = new Activity(type, title, distance);
 
         if (changedType === "Run") {
-            html = `<h2>${a.distance} ${a.type} - ${a.title}</h2>`;
+            html = `<h2 class="run">${a.title} - ${a.type} ${a.distance} </h2>`;
             runSum += Number(a.distance);
         } else if (changedType === "Bike") {
-            html = `<h2>${a.distance} ${a.type} - ${a.title}</h2>`;
+            html = `<h2 class="bike">${a.title} - ${a.type} ${a.distance} </h2>`;
             bikeSum += Number(a.distance);
         } else if (changedType === "Swim") {
-            html = `<h2>${a.distance} ${a.type} - ${a.title}</h2>`;
+            html = `<h2 class="swim">${a.title} - ${a.type} ${a.distance} </h2>`;
             swimSum += Number(a.distance);
         }
 
@@ -103,7 +103,6 @@ UICtrl.init();
 
 
 /*
-
 <!DOCTYPE html>
 
 <head>
@@ -193,29 +192,31 @@ UICtrl.init();
     
 
     
-
-    .run{
-         padding: 20px;
-        background: "#8BC34A";
-        
+    #data-list > .swim{
+        background: #26C6DA;
+        padding: 1em;
+        margin: 1em;
+        color: #fff;
     }
     
-    .bike{
-         padding: 20px;
-        background: "#FF5722";
+    
+        #data-list > .bike{
+         background: #FFB74D;
+        padding: 1em;
+        margin: 1em;
+        color: #fff;
     }
     
-    .swim{
-         padding: 20px;
-        background: "#03A9F4";
+        #data-list > .run{
+        background: #66BB6A;
+        padding: 1em;
+        margin: 1em;
+        color: #fff;
     }
     
     
 </style>
 <script src="a.js"></script>
 </body>
-
-
-
 
 */
