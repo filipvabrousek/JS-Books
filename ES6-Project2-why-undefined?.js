@@ -185,3 +185,125 @@ DOMCtrl.init();
 
 
 //beginning 23.4.2017
+
+/*
+
+<!DOCTYPE html>
+
+<head>
+
+
+</head>
+
+<body>
+
+<h1>Total sport kilometers</h1>
+    
+<!-------------------------DATA INPUT------------------->
+<section id="data-input">
+
+<input type="text" id="desc" placeholder="enter title" value="Initial title">
+<input type="number" id="dist" placeholder="enter distance" value = 1>
+    
+    
+<select id="s">
+<option>Run</option>  
+<option>Bike</option>
+<option>Swim</option>
+</select>
+    
+<button>+</button>
+    
+<h2 id="rs">Run sum</h2>
+<h2 id="bs">Run sum</h2>
+<h2 id="ss">Run sum</h2>
+</section>
+    
+    
+    
+<!-------------------------DATA LIST------------------->
+<section id="data-list">
+
+
+<!---Activities---> 
+    
+</section>
+
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    }
+    
+    h1{
+        text-align: center;
+    }
+    
+    input{
+    padding: 20px;
+    border: 3px solid #03A9F4;
+        margin-bottom: 0.5em;
+    }
+    
+    select{
+    border: none;
+    font-size: 1em;
+    padding: 20px;
+    background: "#8BC34A";
+    }
+    
+    button{
+    border: none;
+     font-size: 1em;
+    padding: 20px; 
+    background: "#8BC34A";
+    }
+    
+    
+    div{
+    background: #3498db;
+    margin-bottom: 0.5em;
+    color: #fff;
+    }
+    
+    #data-input{
+        display: flex;
+        justify-content: center;
+    }
+    #data-input > *{
+      margin: 1em;
+    }
+    
+
+    
+    #data-list > .swim{
+        background: #26C6DA;
+        padding: 1em;
+        margin: 1em;
+        color: #fff;
+    }
+    
+    
+        #data-list > .bike{
+         background: #FFB74D;
+        padding: 1em;
+        margin: 1em;
+        color: #fff;
+    }
+    
+        #data-list > .run{
+        background: #66BB6A;
+        padding: 1em;
+        margin: 1em;
+        color: #fff;
+    }
+    
+    
+</style>
+<script src="a.js"></script>
+</body>
+
+
+
+*/
