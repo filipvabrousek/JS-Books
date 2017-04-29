@@ -43,10 +43,12 @@ const UICtrl = (() => {
 
     /*---------------2-----------------------------------------------ADD THE ITEM----------------------------------------------
     (push to DATA array)
+    
+    ADDITEM (TYPE, TITLE, DIST)
     */
     return {
 
-        addItem(type, title, distance) {
+        addItem(type, desc, dist) {
 
             let ID;
             let newActivity;
@@ -58,13 +60,13 @@ const UICtrl = (() => {
             }
 
             if (type === "Run") {
-                newActivity = new Run(ID, title, distance);
+                newActivity = new Run(ID, desc, dist);
 
             } else if (type === "Bike") {
-                newActivity = new Bike(ID, title, distance);
+                newActivity = new Bike(ID, desc, dist);
 
             } else if (type === "Swim") {
-                newActivity = new Swim(ID, title, distance);
+                newActivity = new Swim(ID, desc, dist);
 
             }
 
@@ -83,7 +85,7 @@ const UICtrl = (() => {
 })();
 
 
-//UICtrl.addItem("Run", "OP", 12);
+//UICtrl.addItem("Run", "Morning run", 12);
 
 
 
@@ -112,34 +114,17 @@ const DOMCtrl = ((UICtrl) => {
         addList(obj, type) {
 
             let html;
-
-            let title = document.querySelector(DOMStrings.desc).value;
-            let distance = document.querySelector(DOMStrings.dist).value;
-
+/*
+*/
             if (type === "Run") {
-                //obj = new Run(ID, type, title, distance);
-                html = `<h2 class="run">${obj.title} - ${obj.type} ${obj.distance} </h2>`;
-                //runSum += Number(a.distance);
-
+                html = `<h2 class="run">${obj.title} -  ${obj.distance} </h2>`;
             } else if (type === "Bike") {
-                //obj = new Bike(ID, type, title, distance);
-                html = `<h2 class="bike">${obj.title} - ${obj.type} ${obj.distance} </h2>`;
-                //bikeSum += Number(a.distance);
-
+                html = `<h2 class="bike">${obj.title} - ${obj.distance} </h2>`;
             } else if (type === "Swim") {
-                //obj = new Swim(ID, type, title, distance);
-                html = `<h2 class="swim">${obj.title} - ${obj.type} ${obj.distance} </h2>`;
-                //swimSum += Number(a.distance);
+                html = `<h2 class="swim">${obj.title} -  ${obj.distance} </h2>`;
             }
 
             document.querySelector(DOMStrings.data).insertAdjacentHTML("beforeend", html);
-
-            /*
-             console.log(runSum);
-             S(DOMStrings.rs).innerHTML = `Run: ${runSum}`;
-             S(DOMStrings.bs).innerHTML = `Bike: ${bikeSum}`;
-             S(DOMStrings.ss).innerHTML = `Swim: ${swimSum}`;
-             */
         },
 
         getInput() {
@@ -150,11 +135,15 @@ const DOMCtrl = ((UICtrl) => {
             };
         },
 
+       
         add2DOM() {
             let data = DOMCtrl.getInput();
-            let newActivity = UICtrl.addItem(data.type, data.title, data.distance);
+            
+            let newActivity = UICtrl.addItem(data.type, data.desc, data.dist);
+            console.log(newActivity); //    Run {ID: 0, title: "Initial title", distance: 1}
+            console.log(newActivity.distance);
             DOMCtrl.addList(newActivity, data.type);
-            console.log(newActivity);
+            
             return newActivity;
         },
 
@@ -181,6 +170,10 @@ const DOMCtrl = ((UICtrl) => {
 
 DOMCtrl.init();
 
+
+
+
+//beginning 23.4.2017
 
 
 
