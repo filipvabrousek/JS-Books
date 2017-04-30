@@ -1,10 +1,20 @@
-function loadDoc() {
-  const r = new XMLHttpRequest();
-  r.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      console.log(this.responseText);
+function showHint(str) {
+    if (str.length == 0) { 
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("hint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", `gethint.php?q=${str}`, true);
+        xmlhttp.send();
     }
-  };
-  r.open("GET", "ajax_info.txt", true);
-  r.send();
 }
+
+/*
+<p>First name: <input type="text" onkeyup="showHint(this.value)"></p>
+<p>Suggestions: <span id="hint"></span></p>
+*/
