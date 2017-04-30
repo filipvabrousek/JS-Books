@@ -144,9 +144,9 @@ const DOMCtrl = ((UICtrl) => {
         },
         
       /*-------DELETE FROM UI---------*/
-        deleteList(type, id){
+        deleteList(){
             type = "Run";
-            const el = document.getElementById(id);
+            const el = document.getElementById("run-0");
             el.parentNode.removeChild(el);
             UICtrl.deleteItem(type, id);
         },
@@ -182,7 +182,7 @@ const DOMCtrl = ((UICtrl) => {
                 changedType = document.querySelector(DOMStrings.select).value;
             });
             
-            document.querySelector(DOMStrings.data).addEventListener("click", UICtrl.deleteList);
+            document.querySelector(DOMStrings.data).addEventListener("click", this.deleteList);
             //S(DOMStrings.data).addEventListener("change", deleteItem);
         },
 
@@ -204,11 +204,6 @@ DOMCtrl.init();
 //beginning 23.4.2017
 
 
-//beginning 23.4.2017
-
-
-
-//beginning 23.4.2017
 
 /*
 
@@ -327,7 +322,4 @@ DOMCtrl.init();
 </style>
 <script src="a.js"></script>
 </body>
-
-
-
 */
