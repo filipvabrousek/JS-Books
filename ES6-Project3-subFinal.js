@@ -2,24 +2,24 @@ const UICtrl = (() => {
 
     /*--------------1-------------------------ACTIVITY CLASSES + DATA--------------------------------*/
     class Run {
-        constructor(ID, title, distance) {
-            this.ID = ID;
+        constructor(id, title, distance) {
+            this.id = id;
             this.title = title;
             this.distance = distance;
         }
     };
 
     class Bike {
-        constructor(ID, title, distance) {
-            this.ID = ID;
+        constructor(id, title, distance) {
+            this.id = id;
             this.title = title;
             this.distance = distance;
         }
     };
 
     class Swim {
-        constructor(ID, title, distance) {
-            this.ID = ID;
+        constructor(id, title, distance) {
+            this.id = id;
             this.title = title;
             this.distance = distance;
         }
@@ -72,7 +72,20 @@ const UICtrl = (() => {
 
             data.activities[type].push(newActivity);
             return newActivity;
-
+            
+        },
+        
+    /*-------DELETE FROM DATA STRUCURE---------*/
+        deleteItem(type, id){
+            let ids;
+            let index;
+            
+            ids = data.activities[type].map(curr => curr.id);
+            index = ids.indexOf(id);
+            
+            if(index !== -1){
+                data.allItems[type].splice(index, 1);
+            }
         }
 
 
@@ -85,9 +98,10 @@ const UICtrl = (() => {
 })();
 
 
-//UICtrl.addItem("Run", "Morning run", 12);
-
-
+/*
+UICtrl.addItem("Run", "Morning run", 12);
+UICtrl.deleteItem("Run", 1);
+*/
 
 
 const DOMCtrl = ((UICtrl) => {
@@ -117,15 +131,28 @@ const DOMCtrl = ((UICtrl) => {
 /*
 */
             if (type === "Run") {
-                html = `<h2 class="run">${obj.title} -  ${obj.distance} </h2>`;
+                html = `<h2 class="run" id="run-${obj.id}">${obj.title} -  ${obj.distance} </h2>`;
             } else if (type === "Bike") {
-                html = `<h2 class="bike">${obj.title} - ${obj.distance} </h2>`;
+                html = `<h2 class="bike" id="bike-${obj.id}">${obj.title} - ${obj.distance} </h2>`;
             } else if (type === "Swim") {
-                html = `<h2 class="swim">${obj.title} -  ${obj.distance} </h2>`;
+                html = `<h2 class="swim" id="swim-${obj.id}">${obj.title} -  ${obj.distance} </h2>`;
             }
+            console.log(`${obj.id}`);
+        
 
             document.querySelector(DOMStrings.data).insertAdjacentHTML("beforeend", html);
         },
+        
+      /*-------DELETE FROM UI---------*/
+        deleteList(type, id){
+            type = "Run";
+            const el = document.getElementById(id);
+            el.parentNode.removeChild(el);
+            UICtrl.deleteItem(type, id);
+        },
+        
+    
+       
 
         getInput() {
             return {
@@ -138,10 +165,9 @@ const DOMCtrl = ((UICtrl) => {
        
         add2DOM() {
             let data = DOMCtrl.getInput();
-            
             let newActivity = UICtrl.addItem(data.type, data.desc, data.dist);
-            console.log(newActivity); //    Run {ID: 0, title: "Initial title", distance: 1}
-            console.log(newActivity.distance);
+            // Run {ID: 0, title: "Initial title", distance: 1}
+           console.log(data.type);
             DOMCtrl.addList(newActivity, data.type);
             
             return newActivity;
@@ -155,6 +181,8 @@ const DOMCtrl = ((UICtrl) => {
             document.querySelector(DOMStrings.select).addEventListener("change", () => {
                 changedType = document.querySelector(DOMStrings.select).value;
             });
+            
+            document.querySelector(DOMStrings.data).addEventListener("click", UICtrl.deleteList);
             //S(DOMStrings.data).addEventListener("change", deleteItem);
         },
 
@@ -171,6 +199,9 @@ const DOMCtrl = ((UICtrl) => {
 DOMCtrl.init();
 
 
+
+
+//beginning 23.4.2017
 
 
 //beginning 23.4.2017
