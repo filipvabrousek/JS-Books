@@ -61,7 +61,7 @@ const UICtrl = (() => {
 
             if (type === "Run") {
                 newActivity = new Run(ID, desc, dist);
-               
+
             } else if (type === "Bike") {
                 newActivity = new Bike(ID, desc, dist);
 
@@ -71,25 +71,25 @@ const UICtrl = (() => {
             }
 
             data.activities[type].push(newActivity);
-            return newActivity;   
+            return newActivity;
         },
-        
-        calculateTotal(type){
+
+        calculateTotal(type) {
             let sum = 0;
             data.activities[type].forEach(cur => {
-      sum += cur.distance;
-    });
+                sum += cur.distance;
+            });
             data.total[type] = sum;
-           
+
             console.log(data.total[type]);
-            
-            
-             return data.total[type];
-              
-            
+
+
+            return data.total[type];
+
+
         },
-        
-    /*-------DELETE FROM DATA STRUCURE---------
+
+        /*-------DELETE FROM DATA STRUCURE---------
         deleteItem(type, id){
             let ids;
             let index;
@@ -114,10 +114,13 @@ const UICtrl = (() => {
 })();
 
 
-/*
-UICtrl.addItem("Run", "Morning run", 12);
-UICtrl.deleteItem("Run", 1);
-*/
+
+
+
+
+
+
+
 
 
 const DOMCtrl = ((UICtrl) => {
@@ -144,8 +147,8 @@ const DOMCtrl = ((UICtrl) => {
         addList(obj, type) {
 
             let html;
-/*
-*/
+            /*
+             */
             if (type === "Run") {
                 html = `<h2 class="run" id="run-${obj.id}">${obj.title} -  ${obj.distance} </h2>`;
             } else if (type === "Bike") {
@@ -154,11 +157,11 @@ const DOMCtrl = ((UICtrl) => {
                 html = `<h2 class="swim" id="swim-${obj.id}">${obj.title} -  ${obj.distance} </h2>`;
             }
             //console.log(`${obj.id}`);
-        
- document.querySelector(DOMStrings.data).insertAdjacentHTML("beforeend", html);
+
+            document.querySelector(DOMStrings.data).insertAdjacentHTML("beforeend", html);
         },
-        
-      /*-------DELETE FROM UI---------
+
+        /*-------DELETE FROM UI---------
         deleteList(type, id){
         
             let el = document.querySelector("#run-0");
@@ -174,9 +177,9 @@ const DOMCtrl = ((UICtrl) => {
         },
         
      */
-        
-    
-    
+
+
+
         getInput() {
             return {
                 type: document.querySelector(DOMStrings.select).value, // Run, Bike, Swim
@@ -185,26 +188,26 @@ const DOMCtrl = ((UICtrl) => {
             };
         },
 
-       
+
         add2DOM() {
             let data = DOMCtrl.getInput();
             let newActivity = UICtrl.addItem(data.type, data.desc, data.dist);
             // Run {ID: 0, title: "Initial title", distance: 1}
             DOMCtrl.addList(newActivity, data.type);
-            
-       var runSum =  UICtrl.calculateTotal("Run");
-        var bikeSum = UICtrl.calculateTotal("Bike");
-        var swimSum =   UICtrl.calculateTotal("Swim");
-   
-      
-              
+
+            var runSum = UICtrl.calculateTotal("Run");
+            var bikeSum = UICtrl.calculateTotal("Bike");
+            var swimSum = UICtrl.calculateTotal("Swim");
+
+
+
             document.querySelector(DOMStrings.rs).innerHTML = `Run ${runSum}`;
-              document.querySelector(DOMStrings.bs).innerHTML = `Bike ${bikeSum}`;
-              document.querySelector(DOMStrings.ss).innerHTML = `Swim ${swimSum}`;
+            document.querySelector(DOMStrings.bs).innerHTML = `Bike ${bikeSum}`;
+            document.querySelector(DOMStrings.ss).innerHTML = `Swim ${swimSum}`;
             return newActivity;
         },
 
-        
+
 
         /*--------------------------------------ADD EL---------------------------------------*/
         addEL() {
@@ -213,7 +216,7 @@ const DOMCtrl = ((UICtrl) => {
             document.querySelector(DOMStrings.select).addEventListener("change", () => {
                 changedType = document.querySelector(DOMStrings.select).value;
             });
-            
+
             //document.querySelector(DOMStrings.data).addEventListener("click", this.deleteList("run", 0));
             //S(DOMStrings.data).addEventListener("change", deleteItem);
         },
@@ -222,7 +225,7 @@ const DOMCtrl = ((UICtrl) => {
         init() {
             console.log("App has started");
             this.addEL();
-            
+
         }
     }
 
@@ -233,6 +236,8 @@ DOMCtrl.init();
 
 
 
+
+//beginning 23.4.2017
 
 //beginning 23.4.2017 - 30.4.2017
 
