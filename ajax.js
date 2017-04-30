@@ -1,10 +1,10 @@
 function loadDoc() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
+  const r = new XMLHttpRequest();
+  r.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       console.log(this.responseText);
     }
   };
-  xhttp.open("GET", "ajax_info.txt", true);
-  xhttp.send();
+  r.open("GET", "ajax_info.txt", true);
+  r.send();
 }
