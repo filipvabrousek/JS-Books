@@ -34,9 +34,9 @@ const UICtrl = (() => {
             Swim: []
         },
         total: {
-            runSum: 0,
-            bikeSum: 0,
-            swimSum: 0,
+            Run: 0,
+            Bike: 0,
+            Swim: 0,
         }
     };
 
@@ -61,7 +61,7 @@ const UICtrl = (() => {
 
             if (type === "Run") {
                 newActivity = new Run(ID, desc, dist);
-
+               
             } else if (type === "Bike") {
                 newActivity = new Bike(ID, desc, dist);
 
@@ -71,11 +71,22 @@ const UICtrl = (() => {
             }
 
             data.activities[type].push(newActivity);
-            return newActivity;
+            return newActivity;   
+        },
+        
+        calculateTotal(type){
+            let sum = 0;
+            data.activities[type].forEach(cur => {
+      sum += cur.distance;
+    });
+            data.total[type] = sum;
+            console.log(data.total[type]);
+            
+              
             
         },
         
-    /*-------DELETE FROM DATA STRUCURE---------*/
+    /*-------DELETE FROM DATA STRUCURE---------
         deleteItem(type, id){
             let ids;
             let index;
@@ -86,8 +97,10 @@ const UICtrl = (() => {
             if(index !== -1){
                 data.allItems[type].splice(index, 1);
             }
+            
+            console.log("delete item called");
         }
-
+*/
 
 
     };
@@ -137,19 +150,27 @@ const DOMCtrl = ((UICtrl) => {
             } else if (type === "Swim") {
                 html = `<h2 class="swim" id="swim-${obj.id}">${obj.title} -  ${obj.distance} </h2>`;
             }
-            console.log(`${obj.id}`);
+            //console.log(`${obj.id}`);
         
-
-            document.querySelector(DOMStrings.data).insertAdjacentHTML("beforeend", html);
+ document.querySelector(DOMStrings.data).insertAdjacentHTML("beforeend", html);
         },
         
-      /*-------DELETE FROM UI---------*/
-        deleteList(){
-            type = "Run";
-            const el = document.getElementById("run-0");
+      /*-------DELETE FROM UI---------
+        deleteList(type, id){
+        
+            let el = document.querySelector("#run-0");
+         //still false?
+            if(el){
+            el = document.querySelector("#" + type + "-" + id);
             el.parentNode.removeChild(el);
-            UICtrl.deleteItem(type, id);
+            UICtrl.deleteItem("Run", id);
+            return el;
+            }
+            
+            console.log(el);
         },
+        
+     */
         
     
        
@@ -167,12 +188,20 @@ const DOMCtrl = ((UICtrl) => {
             let data = DOMCtrl.getInput();
             let newActivity = UICtrl.addItem(data.type, data.desc, data.dist);
             // Run {ID: 0, title: "Initial title", distance: 1}
-           console.log(data.type);
             DOMCtrl.addList(newActivity, data.type);
+            
+        UICtrl.calculateTotal("Run");
+        UICtrl.calculateTotal("Bike");
+        UICtrl.calculateTotal("Swim");
+              
+            
             
             return newActivity;
         },
 
+        showCount(){
+           console.log(`Run: ${UICtrl.data.total["Run"]}, ${UICtrl.data.total["Bike"]}, ${UICtrl.data.total["Swim"]} `);
+        },
 
         /*--------------------------------------ADD EL---------------------------------------*/
         addEL() {
@@ -182,7 +211,7 @@ const DOMCtrl = ((UICtrl) => {
                 changedType = document.querySelector(DOMStrings.select).value;
             });
             
-            document.querySelector(DOMStrings.data).addEventListener("click", this.deleteList);
+            //document.querySelector(DOMStrings.data).addEventListener("click", this.deleteList("run", 0));
             //S(DOMStrings.data).addEventListener("change", deleteItem);
         },
 
@@ -190,6 +219,7 @@ const DOMCtrl = ((UICtrl) => {
         init() {
             console.log("App has started");
             this.addEL();
+            
         }
     }
 
