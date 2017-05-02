@@ -398,3 +398,68 @@
     if ('undefined' != typeof module) module.exports = preact; else self.preact = preact;
 }();
 //# sourceMappingURL=preact.js.map
+
+
+
+
+
+
+
+
+/*
+
+POLYFILLS
+
+
+*/
+
+!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e(require("preact")):"function"==typeof define&&define.amd?define(["preact"],e):t.linkState=e(t.preact)}(this,function(t){function e(t,e,n,o){for(o=0,e=e.split?e.split("."):e;t&&o<e.length;)t=t[e[o++]];return void 0===t?n:t}function n(t,n,o){var r=n.split(".");return function(n){for(var i=n&&n.target||this,f={},p=f,u="string"==typeof o?e(n,o):i.nodeName?i.type.match(/^che|rad/)?i.checked:i.value:n,a=0;a<r.length-1;a++)p=p[r[a]]||(p[r[a]]=!a&&t.state[r[a]]||{});p[r[a]]=u,t.setState(f)}}return t.Component.prototype.linkState=function(t,e){return n(this,t,e)},n});
+//# sourceMappingURL=polyfill.umd.js.map
+
+
+
+/*
+WITH BABEL:
+
+
+let { h, render, Component } = preact;  // import { ... } from 'preact';
+
+
+class App extends Component {
+	state = {
+		text: 'hello'
+	
+};
+	
+	render({}, { text }) {
+		return (
+			<app>
+				<header>
+					<h1>
+						Preact Kickstart
+						<sub>powered by <a href="https://github.com/developit/preact" target="_blank">preact</a></sub>
+					</h1>
+					<input type="text" placeholder="Enter text..." value={ text } onInput={ this.linkState('text') } />
+				</header>
+				<main>
+					<BigLetters text={ text } />
+				</main>
+			</app>
+		);
+	}
+}
+
+
+class BigLetters extends Component {
+	render({ text }) {
+		return <h1>{ text.toUpperCase() }</h1>;
+	}
+}
+
+
+// Start 'er up:
+render(<App />, document.body);
+
+
+
+*/
