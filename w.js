@@ -93,6 +93,6 @@ var libraries = [{
   url: 'http://koajs.com/'
 }, ];
 
-ReactDOM.render( < SearchExample items = {
+ReactDOM.render( < Search items = {
             libraries}, document.getElementById('container;
 '));
