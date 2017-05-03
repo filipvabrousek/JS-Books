@@ -397,7 +397,6 @@
     };
     if ('undefined' != typeof module) module.exports = preact; else self.preact = preact;
 }();
-//# sourceMappingURL=preact.js.map
 
 
 
@@ -406,276 +405,53 @@
 
 
 
-/*
-
-POLYFILLS
 
 
-*/
+
 
 !function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e(require("preact")):"function"==typeof define&&define.amd?define(["preact"],e):t.linkState=e(t.preact)}(this,function(t){function e(t,e,n,o){for(o=0,e=e.split?e.split("."):e;t&&o<e.length;)t=t[e[o++]];return void 0===t?n:t}function n(t,n,o){var r=n.split(".");return function(n){for(var i=n&&n.target||this,f={},p=f,u="string"==typeof o?e(n,o):i.nodeName?i.type.match(/^che|rad/)?i.checked:i.value:n,a=0;a<r.length-1;a++)p=p[r[a]]||(p[r[a]]=!a&&t.state[r[a]]||{});p[r[a]]=u,t.setState(f)}}return t.Component.prototype.linkState=function(t,e){return n(this,t,e)},n});
 //# sourceMappingURL=polyfill.umd.js.map
 
-/*
-! function(t, e) {
-    "object" == typeof exports && "undefined" != typeof module ? module.exports = e(require("preact")) : "function" == typeof define && define.amd ? define(["preact"], e) : t.linkState = e(t.preact)
-}(this, function(t) {
-    function e(t, e, n, o) {
-        for (o = 0, e = e.split ? e.split(".") : e; t && o < e.length;) t = t[e[o++]];
-        return void 0 === t ? n : t
-    }
-
-    function n(t, n, o) {
-        var r = n.split(".");
-        return function(n) {
-            for (var i = n && n.target || this, f = {}, p = f, u = "string" == typeof o ? e(n, o) : i.nodeName ? i.type.match(/^che|rad/) ? i.checked : i.value : n, a = 0; a < r.length - 1; a++) p = p[r[a]] || (p[r[a]] = !a && t.state[r[a]] || {});
-            p[r[a]] = u, t.setState(f)
-        }
-    }
-    return t.Component.prototype.linkState = function(t, e) {
-        return n(this, t, e)
-    }, n
-});
-//# sourceMappingURL=polyfill.umd.js.map
-*/
 
 
 /*
-WITH BABEL:
+
+BABEL:
 
 
-let { h, render, Component } = preact;  // import { ... } from 'preact';
+let { h, render, Component } = preact; // import { ... } from 'preact';
 
 
 class App extends Component {
-	state = {
-		text: 'hello'
-	
-};
-	
-	render({}, { text }) {
-		return (
-			<app>
-				<header>
-					<h1>
-						Preact Kickstart
-						<sub>powered by <a href="https://github.com/developit/preact" target="_blank">preact</a></sub>
-					</h1>
-					<input type="text" placeholder="Enter text..." value={ text } onInput={ this.linkState('text') } />
-				</header>
-				<main>
-					<BigLetters text={ text } />
-				</main>
-			</app>
-		);
-	}
+  state = {
+    text: "Hello!"
+  };
+
+  render({}, { text }) {
+    return (
+      <app>
+        <input
+          type="text"
+          placeholder="Enter text..."
+          value={text}
+          onInput={this.linkState("text")}
+        />
+        <main>
+          <Result text={text} />
+        </main>
+      </app>
+    );
+  }
 }
 
-
-class BigLetters extends Component {
-	render({ text }) {
-		return <h1>{ text.toUpperCase() }</h1>;
-	}
+class Result extends Component {
+  render({ text }) {
+    return <h1>{text}</h1>;
+  }
 }
 
-
-// Start 'er up:
 render(<App />, document.body);
 
-
-
-
-
-* {
-  box-sizing: border-box;
-}
-html,
-body {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Helvetica Nueue', Arial, sans-serif;
-  font-weight: 400;
-  color: #444;
-  background: #FAFAFA;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-html {
-  overflow: hidden;
-}
-app {
-  height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-line-pack: stretch;
-      align-content: stretch;
-  overflow: hidden;
-}
-a {
-  color: blue;
-}
-header {
-  width: 100%;
-  height: 56px;
-  color: #FFF;
-  background: #673AB7;
-  font-size: 20px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  padding: 15px;
-  will-change: transform;
-  z-index: 50;
-}
-header h1 {
-  float: left;
-  margin: 0;
-  padding: 0;
-  font-size: 20px;
-  line-height: 26px;
-}
-header h1 sub {
-  font-size: 60%;
-}
-header h1 sub,
-header h1 sub a {
-  color: #BBB;
-}
-header input {
-  float: right;
-  padding: 5px;
-  display: block;
-  font-size: 16px;
-  border: 1px solid #555;
-  border-radius: 5px;
-  color: #000;
-  outline: none;
-}
-header input:focus {
-  border-color: #69F;
-}
-main {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  background: #FAFAFA;
-  width: 100%;
-  text-align: center;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overflow-scrolling: touch;
-}
-.bottom {
-  width: 100%;
-}
-.bottom .more {
-  display: block;
-  margin: 20px auto;
-  padding: 15px 50px;
-  font-size: 20px;
-  border-radius: 3px;
-  border: none;
-  background: #EEE;
-  cursor: pointer;
-  outline: none;
-}
-.bottom .more[disabled] {
-  color: #AAA;
-  cursor: default;
-}
-.flickr-image-list {
-  margin: 0 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-.flickr-image {
-  border-top: 1px solid #E2E2E2;
-  padding: 20px 8px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-.flickr-image .flickr-image-container {
-  position: relative;
-  background-color: #111;
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 300px;
-  height: 198px;
-  -ms-interpolation-mode: nearest-neighbor;
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: -moz-crisp-edges;
-      image-rendering: pixelated;
-  overflow: hidden;
-}
-.flickr-image h1 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: bold;
-  margin: 1em 0 0.5em 0;
-  width: 290px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  min-height: 24px;
-}
-.flickr-image h2 {
-  margin: 1em 0 0.2em 0;
-  font-size: 12px;
-  color: #555;
-  display: block;
-  width: 290px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.flickr-image h3 {
-  margin: 0.3em 0 0.8em 0;
-  font-weight: normal;
-  font-size: 12px;
-  color: #555;
-  display: block;
-  width: 290px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.flickr-image a {
-  font-size: 11px;
-  text-decoration: none;
-  width: 290px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
 
 
 */
