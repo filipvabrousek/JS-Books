@@ -1,19 +1,27 @@
 !function() {
+    
+    
     'use strict';
     function VNode() {}
+    
+    
+    /*--------------------------------------H FUNCTION-------------------------------*/
     function h(nodeName, attributes) {
         var lastSimple, child, simple, i, children = EMPTY_CHILDREN;
         for (i = arguments.length; i-- > 2; ) stack.push(arguments[i]);
+        
         if (attributes && null != attributes.children) {
             if (!stack.length) stack.push(attributes.children);
             delete attributes.children;
         }
+        
         while (stack.length) if ((child = stack.pop()) && void 0 !== child.pop) for (i = child.length; i--; ) stack.push(child[i]); else {
             if (child === !0 || child === !1) child = null;
             if (simple = 'function' != typeof nodeName) if (null == child) child = ''; else if ('number' == typeof child) child = String(child); else if ('string' != typeof child) simple = !1;
             if (simple && lastSimple) children[children.length - 1] += child; else if (children === EMPTY_CHILDREN) children = [ child ]; else children.push(child);
             lastSimple = simple;
         }
+        
         var p = new VNode();
         p.nodeName = nodeName;
         p.children = children;
@@ -22,28 +30,38 @@
         if (void 0 !== options.vnode) options.vnode(p);
         return p;
     }
+    
+    
+    
+    
     function extend(obj, props) {
         for (var i in props) obj[i] = props[i];
         return obj;
     }
+    
     function cloneElement(vnode, props) {
         return h(vnode.nodeName, extend(extend({}, vnode.attributes), props), arguments.length > 2 ? [].slice.call(arguments, 2) : vnode.children);
     }
+    
     function enqueueRender(component) {
         if (!component.__d && (component.__d = !0) && 1 == items.push(component)) (options.debounceRendering || setTimeout)(rerender);
     }
+    
     function rerender() {
         var p, list = items;
         items = [];
         while (p = list.pop()) if (p.__d) renderComponent(p);
     }
+    
     function isSameNodeType(node, vnode, hydrating) {
         if ('string' == typeof vnode || 'number' == typeof vnode) return void 0 !== node.splitText;
         if ('string' == typeof vnode.nodeName) return !node._componentConstructor && isNamedNode(node, vnode.nodeName); else return hydrating || node._componentConstructor === vnode.nodeName;
     }
+    
     function isNamedNode(node, nodeName) {
         return node.__n === nodeName || node.nodeName.toLowerCase() === nodeName.toLowerCase();
     }
+    
     function getNodeProps(vnode) {
         var props = extend({}, vnode.attributes);
         props.children = vnode.children;
@@ -51,14 +69,17 @@
         if (void 0 !== defaultProps) for (var i in defaultProps) if (void 0 === props[i]) props[i] = defaultProps[i];
         return props;
     }
+    
     function createNode(nodeName, isSvg) {
         var node = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', nodeName) : document.createElement(nodeName);
         node.__n = nodeName;
         return node;
     }
+    
     function removeNode(node) {
         if (node.parentNode) node.parentNode.removeChild(node);
     }
+    
     function setAccessor(node, name, old, value, isSvg) {
         if ('className' === name) name = 'class';
         if ('key' === name) ; else if ('ref' === name) {
@@ -87,14 +108,25 @@
             if (null == value || value === !1) if (ns) node.removeAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase()); else node.removeAttribute(name); else if ('function' != typeof value) if (ns) node.setAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase(), value); else node.setAttribute(name, value);
         }
     }
+    
+    
+    
+    
+    
+    
+    
     function setProperty(node, name, value) {
         try {
             node[name] = value;
         } catch (e) {}
     }
+    
+    
     function eventProxy(e) {
         return this.__l[e.type](options.event && options.event(e) || e);
     }
+    
+    
     function flushMounts() {
         var c;
         while (c = mounts.pop()) {
@@ -102,6 +134,8 @@
             if (c.componentDidMount) c.componentDidMount();
         }
     }
+    
+    
     function diff(dom, vnode, context, mountAll, parent, componentRoot) {
         if (!diffLevel++) {
             isSvgMode = null != parent && void 0 !== parent.ownerSVGElement;
@@ -115,6 +149,10 @@
         }
         return ret;
     }
+    
+    
+    
+    
     function idiff(dom, vnode, context, mountAll, componentRoot) {
         var out = dom, prevSvgMode = isSvgMode;
         if (null == vnode) vnode = '';
@@ -149,6 +187,16 @@
         isSvgMode = prevSvgMode;
         return out;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     function innerDiffNode(dom, vchildren, context, mountAll, isHydrating) {
         var j, c, vchild, child, originalChildren = dom.childNodes, children = [], keyed = {}, keyedLen = 0, min = 0, len = originalChildren.length, childrenLen = 0, vlen = vchildren ? vchildren.length : 0;
         if (0 !== len) for (var i = 0; i < len; i++) {
@@ -181,6 +229,10 @@
         if (keyedLen) for (var i in keyed) if (void 0 !== keyed[i]) recollectNodeTree(keyed[i], !1);
         while (min <= childrenLen) if (void 0 !== (child = children[childrenLen--])) recollectNodeTree(child, !1);
     }
+    
+    
+    
+    
     function recollectNodeTree(node, unmountOnly) {
         var component = node._component;
         if (component) unmountComponent(component); else {
@@ -189,6 +241,8 @@
             removeChildren(node);
         }
     }
+    
+    
     function removeChildren(node) {
         node = node.lastChild;
         while (node) {
@@ -197,15 +251,20 @@
             node = next;
         }
     }
+    
+    
+    
     function diffAttributes(dom, attrs, old) {
         var name;
         for (name in old) if ((!attrs || null == attrs[name]) && null != old[name]) setAccessor(dom, name, old[name], old[name] = void 0, isSvgMode);
         for (name in attrs) if (!('children' === name || 'innerHTML' === name || name in old && attrs[name] === ('value' === name || 'checked' === name ? dom[name] : old[name]))) setAccessor(dom, name, old[name], old[name] = attrs[name], isSvgMode);
     }
+    
     function collectComponent(component) {
         var name = component.constructor.name;
         (components[name] || (components[name] = [])).push(component);
     }
+    
     function createComponent(Ctor, props, context) {
         var inst, list = components[Ctor.name];
         if (Ctor.prototype && Ctor.prototype.render) {
@@ -223,9 +282,11 @@
         }
         return inst;
     }
+    
     function doRender(props, state, context) {
         return this.constructor(props, context);
     }
+    
     function setComponentProps(component, props, opts, context, mountAll) {
         if (!component.__x) {
             component.__x = !0;
@@ -245,6 +306,13 @@
             if (component.__r) component.__r(component);
         }
     }
+    
+    
+    
+    
+    
+    
+    
     function renderComponent(component, opts, mountAll, isChild) {
         if (!component.__x) {
             var rendered, inst, cbase, props = component.props, state = component.state, context = component.context, previousProps = component.__p || props, previousState = component.__s || state, previousContext = component.__c || context, isUpdate = component.base, nextBase = component.__b, initialBase = isUpdate || nextBase, initialChildComponent = component._component, skip = !1;
@@ -257,6 +325,8 @@
                 component.state = state;
                 component.context = context;
             }
+            
+            
             component.__p = component.__s = component.__c = component.__b = null;
             component.__d = !1;
             if (!skip) {
@@ -284,6 +354,9 @@
                         base = diff(cbase, rendered, context, mountAll || !isUpdate, initialBase && initialBase.parentNode, !0);
                     }
                 }
+                
+                
+                
                 if (initialBase && base !== initialBase && inst !== initialChildComponent) {
                     var baseParent = initialBase.parentNode;
                     if (baseParent && base !== baseParent) {
@@ -294,6 +367,9 @@
                         }
                     }
                 }
+                
+                
+                
                 if (toUnmount) unmountComponent(toUnmount);
                 component.base = base;
                 if (base && !isChild) {
@@ -303,6 +379,9 @@
                     base._componentConstructor = componentRef.constructor;
                 }
             }
+            
+            
+            
             if (!isUpdate || mountAll) mounts.unshift(component); else if (!skip) {
                 flushMounts();
                 if (component.componentDidUpdate) component.componentDidUpdate(previousProps, previousState, previousContext);
@@ -312,6 +391,11 @@
             if (!diffLevel && !isChild) flushMounts();
         }
     }
+    
+    
+    
+    
+    
     function buildComponentFromVNode(dom, vnode, context, mountAll) {
         var c = dom && dom._component, originalComponent = c, oldDom = dom, isDirectOwner = c && dom._componentConstructor === vnode.nodeName, isOwner = isDirectOwner, props = getNodeProps(vnode);
         while (c && !isOwner && (c = c.__u)) isOwner = c.constructor === vnode.nodeName;
@@ -337,6 +421,10 @@
         }
         return dom;
     }
+    
+    
+    
+    
     function unmountComponent(component) {
         if (options.beforeUnmount) options.beforeUnmount(component);
         var base = component.base;
@@ -353,15 +441,25 @@
         }
         if (component.__r) component.__r(null);
     }
+    
+    
+    
+    
+    /*----------------------------------COMPONENT--------------------------------*/
     function Component(props, context) {
         this.__d = !0;
         this.context = context;
         this.props = props;
         this.state = this.state || {};
     }
+    
+    
+    
     function render(vnode, parent, merge) {
         return diff(merge, vnode, {}, !1, parent, !1);
     }
+    
+    
     var options = {};
     var stack = [];
     var EMPTY_CHILDREN = [];
@@ -372,6 +470,8 @@
     var isSvgMode = !1;
     var hydrating = !1;
     var components = {};
+   
+    
     extend(Component.prototype, {
         setState: function(state, callback) {
             var s = this.state;
@@ -386,6 +486,11 @@
         },
         render: function() {}
     });
+    
+    
+    
+    
+    /*----------------------------------PREACT OBJECT--------------------------------*/
     var preact = {
         h: h,
         createElement: h,
@@ -395,10 +500,10 @@
         rerender: rerender,
         options: options
     };
+    
+    
     if ('undefined' != typeof module) module.exports = preact; else self.preact = preact;
 }();
-
-
 
 
 
