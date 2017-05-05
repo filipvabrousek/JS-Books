@@ -562,8 +562,6 @@
 /*
 
 BABEL:
-
-
 let { h, render, Component } = preact; // import { ... } from 'preact';
 
 
@@ -596,6 +594,9 @@ class Result extends Component {
 }
 
 render(<App />, document.body);
+
+
+
 
 
 
