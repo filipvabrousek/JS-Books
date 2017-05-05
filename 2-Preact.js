@@ -337,19 +337,28 @@
     
     
     /*--------------------------------------------------------------------------------
-    DIFFING...
+    25) diff attributes using "setAccessor"
+    26) collectComponent ?
+    27) createComponent ?
+    28) doRender
+    
     */
+    
+    //25
     function diffAttributes(dom, attrs, old) {
         var name;
         for (name in old) if ((!attrs || null == attrs[name]) && null != old[name]) setAccessor(dom, name, old[name], old[name] = void 0, isSvgMode);
         for (name in attrs) if (!('children' === name || 'innerHTML' === name || name in old && attrs[name] === ('value' === name || 'checked' === name ? dom[name] : old[name]))) setAccessor(dom, name, old[name], old[name] = attrs[name], isSvgMode);
     }
     
+    //26
     function collectComponent(component) {
         var name = component.constructor.name;
         (components[name] || (components[name] = [])).push(component);
     }
     
+    
+    //27
     function createComponent(Ctor, props, context) {
         var inst, list = components[Ctor.name];
         if (Ctor.prototype && Ctor.prototype.render) {
@@ -368,10 +377,19 @@
         return inst;
     }
     
+    
+    //28
     function doRender(props, state, context) {
         return this.constructor(props, context);
     }
     
+   
+    /*---------------------------------------------------------------------------------
+    29 - setComponentProps
+    30 - renderComponent
+    */
+    
+    //29
     function setComponentProps(component, props, opts, context, mountAll) {
         if (!component.__x) {
             component.__x = !0;
@@ -397,6 +415,7 @@
     
     
     
+    //30
     
     function renderComponent(component, opts, mountAll, isChild) {
         if (!component.__x) {
