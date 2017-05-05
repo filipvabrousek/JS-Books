@@ -2,30 +2,20 @@
     function VNode() {}
 
 
-    /*--------------------------------------H FUNCTION-------------------------------
-    1) push arguments[i] to STACK
-    2) push attributes.children to STACK array
-    3) push children
-    4) set properties of VNode function / object
-    
-    
-    */
+    /*--------------------------------------H FUNCTION-------------------------------*/
     function h(nodeName, attributes) {
         let lastSimple;
         let child;
         let simple;
         let i;
         let children = EMPTY_CHILDREN;
-        //1
         for (i = arguments.length; i-- > 2; ) stack.push(arguments[i]);
 
-        // 2
         if (attributes && null != attributes.children) {
             if (!stack.length) stack.push(attributes.children);
             delete attributes.children;
         }
 
-        //3
         while (stack.length) if ((child = stack.pop()) && void 0 !== child.pop) for (i = child.length; i--; ) stack.push(child[i]); else {
             if (child === !0 || child === !1) child = null;
             if (simple = 'function' != typeof nodeName) if (null == child) child = ''; else if ('number' == typeof child) child = String(child); else if ('string' != typeof child) simple = !1;
@@ -33,8 +23,6 @@
             lastSimple = simple;
         }
 
-
-        //4
         const p = new VNode();
         p.nodeName = nodeName;
         p.children = children;
@@ -45,38 +33,21 @@
     }
 
 
-    /*-----------------------------------OTHER FUNCTIONS--------------------------------------------
-    5) Extend object with props
-    6) clone element using "h" function and "clone element"
-    7) put renderers in order
-    8) rerender
-    9) isSameNodeType - BOOLEAN
-    10) isSameNode - BOOLEAN
-    11) getNodeProps 
-    12) createNode
-    13) removeNode
-    
-    */
 
-    //5
+
     function extend(obj, props) {
         for (const i in props) obj[i] = props[i];
         return obj;
     }
 
-    //6
     function cloneElement(vnode, props) {
         return h(vnode.nodeName, extend(extend({}, vnode.attributes), props), arguments.length > 2 ? [].slice.call(arguments, 2) : vnode.children);
     }
 
-
-    //7
     function enqueueRender(component) {
         if (!component.__d && (component.__d = !0) && 1 == items.push(component)) (options.debounceRendering || setTimeout)(rerender);
     }
 
-
-    //8
     function rerender() {
         let p;
         const list = items;
@@ -84,19 +55,15 @@
         while (p = list.pop()) if (p.__d) renderComponent(p);
     }
 
-    //9
     function isSameNodeType(node, vnode, hydrating) {
         if ('string' == typeof vnode || 'number' == typeof vnode) return void 0 !== node.splitText;
         if ('string' == typeof vnode.nodeName) return !node._componentConstructor && isNamedNode(node, vnode.nodeName); else return hydrating || node._componentConstructor === vnode.nodeName;
     }
 
-    //10
     function isNamedNode(node, nodeName) {
         return node.__n === nodeName || node.nodeName.toLowerCase() === nodeName.toLowerCase();
     }
 
-
-    //11
     function getNodeProps(vnode) {
         const props = extend({}, vnode.attributes);
         props.children = vnode.children;
@@ -105,63 +72,37 @@
         return props;
     }
 
-
-    //12
     function createNode(nodeName, isSvg) {
         const node = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', nodeName) : document.createElement(nodeName);
         node.__n = nodeName;
         return node;
     }
 
-
-    //13
     function removeNode(node) {
         if (node.parentNode) node.parentNode.removeChild(node);
     }
 
-
-
-
-    /*-----------------------------------------------SET ACCESSOR------------------------------------------------
-    14) Set CSS style and class
-    15) Check if name contains ON on first 2 positions, if yes add eventlistener
-    16) Work with attributes
-    
-    */
     function setAccessor(node, name, old, value, isSvg) {
-       
-        //14
         if ('className' === name) name = 'class';
-        
         if ('key' === name) ; else if ('ref' === name) {
             if (old) old(null);
             if (value) value(node);
-            
         } else if ('class' === name && !isSvg) node.className = value || ''; else if ('style' === name) {
             if (!value || 'string' == typeof value || 'string' == typeof old) node.style.cssText = value || '';
             if (value && 'object' == typeof value) {
                 if ('string' != typeof old) for (var i in old) if (!(i in value)) node.style[i] = '';
                 for (var i in value) node.style[i] = 'number' == typeof value[i] && IS_NON_DIMENSIONAL.test(i) === !1 ? `${value[i]}px` : value[i];
             }
-            
-            
-            
         } else if ('dangerouslySetInnerHTML' === name) {
             if (value) node.innerHTML = value.__html || '';
-        } 
-        
-        //15
-        else if ('o' == name[0] && 'n' == name[1]) {
+        } else if ('o' == name[0] && 'n' == name[1]) {
             const useCapture = name !== (name = name.replace(/Capture$/, ''));
             name = name.toLowerCase().substring(2);
             if (value) {
                 if (!old) node.addEventListener(name, eventProxy, useCapture);
             } else node.removeEventListener(name, eventProxy, useCapture);
             (node.__l || (node.__l = {}))[name] = value;
-        }
-        
-        //16
-        else if ('list' !== name && 'type' !== name && !isSvg && name in node) {
+        } else if ('list' !== name && 'type' !== name && !isSvg && name in node) {
             setProperty(node, name, null == value ? '' : value);
             if (null == value || value === !1) node.removeAttribute(name);
         } else {
@@ -175,26 +116,19 @@
 
 
 
-    /*----------------------------------------SMALL FUNCTIONS---------------------------------------
-    17) Set property
-    18) eventproxy
-    19) flush mounts
-    
-    */
 
-    //17
     function setProperty(node, name, value) {
         try {
             node[name] = value;
         } catch (e) {}
     }
 
-    //18
+
     function eventProxy(e) {
         return this.__l[e.type](options.event && options.event(e) || e);
     }
 
-    //19
+
     function flushMounts() {
         let c;
         while (c = mounts.pop()) {
@@ -203,19 +137,7 @@
         }
     }
 
-    /*------------------------------------------DIFF----------------------------------
-    20) diff ?
-    21) idiff ?
-    22) innerDiffNode
-    23) recolectNodeTree
-    24) removeNode
-    
-    
-    
-    */
 
-
-    //20
     function diff(dom, vnode, context, mountAll, parent, componentRoot) {
         if (!diffLevel++) {
             isSvgMode = null != parent && void 0 !== parent.ownerSVGElement;
@@ -232,12 +154,11 @@
 
 
 
-    //21
+
     function idiff(dom, vnode, context, mountAll, componentRoot) {
         let out = dom;
         const prevSvgMode = isSvgMode;
         if (null == vnode) vnode = '';
-
         if ('string' == typeof vnode) {
             if (dom && void 0 !== dom.splitText && dom.parentNode && (!dom._component || componentRoot)) {
                 if (dom.nodeValue != vnode) dom.nodeValue = vnode;
@@ -251,8 +172,6 @@
             out.__preactattr_ = !0;
             return out;
         }
-
-
         if ('function' == typeof vnode.nodeName) return buildComponentFromVNode(dom, vnode, context, mountAll);
         isSvgMode = 'svg' === vnode.nodeName ? !0 : 'foreignObject' === vnode.nodeName ? !1 : isSvgMode;
         if (!dom || !isNamedNode(dom, String(vnode.nodeName))) {
@@ -263,8 +182,6 @@
                 recollectNodeTree(dom, !0);
             }
         }
-
-
         const fc = out.firstChild;
         const props = out.__preactattr_ || (out.__preactattr_ = {});
         const vchildren = vnode.children;
@@ -284,7 +201,7 @@
 
 
 
-    // 22
+
     function innerDiffNode(dom, vchildren, context, mountAll, isHydrating) {
         let j;
         let c;
@@ -333,7 +250,7 @@
 
 
 
-    // 23
+
     function recollectNodeTree(node, unmountOnly) {
         const component = node._component;
         if (component) unmountComponent(component); else {
@@ -343,7 +260,7 @@
         }
     }
 
-    //24
+
     function removeChildren(node) {
         node = node.lastChild;
         while (node) {
@@ -354,29 +271,18 @@
     }
 
 
-    /*--------------------------------------------------------------------------------
-    25) diff attributes using "setAccessor"
-    26) collectComponent ?
-    27) createComponent ?
-    28) doRender
-    
-    */
 
-    //25
     function diffAttributes(dom, attrs, old) {
         let name;
         for (name in old) if ((!attrs || null == attrs[name]) && null != old[name]) setAccessor(dom, name, old[name], old[name] = void 0, isSvgMode);
         for (name in attrs) if (!('children' === name || 'innerHTML' === name || name in old && attrs[name] === ('value' === name || 'checked' === name ? dom[name] : old[name]))) setAccessor(dom, name, old[name], old[name] = attrs[name], isSvgMode);
     }
 
-    //26
     function collectComponent(component) {
         const name = component.constructor.name;
         (components[name] || (components[name] = [])).push(component);
     }
 
-
-    //27
     function createComponent(Ctor, props, context) {
         let inst;
         const list = components[Ctor.name];
@@ -396,19 +302,10 @@
         return inst;
     }
 
-
-    //28
     function doRender(props, state, context) {
         return this.constructor(props, context);
     }
 
-
-    /*---------------------------------------------------------------------------------
-    29 - setComponentProps
-    30 - renderComponent
-    */
-
-    //29
     function setComponentProps(component, props, opts, context, mountAll) {
         if (!component.__x) {
             component.__x = !0;
@@ -434,7 +331,6 @@
 
 
 
-    //30
 
     function renderComponent(component, opts, mountAll, isChild) {
         if (!component.__x) {
@@ -658,5 +554,49 @@
 
 
 
-
 !((t, e) => {"object"==typeof exports&&"undefined"!=typeof module?module.exports=e(require("preact")):"function"==typeof define&&define.amd?define(["preact"],e):t.linkState=e(t.preact)})(this,t => {function e(t,e,n,o){for(o=0,e=e.split?e.split("."):e;t&&o<e.length;)t=t[e[o++]];return void 0===t?n:t}function n(t,n,o){const r=n.split(".");return function(n){for(var i=n&&n.target||this,f={},p=f,u="string"==typeof o?e(n,o):i.nodeName?i.type.match(/^che|rad/)?i.checked:i.value:n,a=0;a<r.length-1;a++)p=p[r[a]]||(p[r[a]]=!a&&t.state[r[a]]||{});p[r[a]]=u,t.setState(f)}}return t.Component.prototype.linkState=function(t,e){return n(this,t,e)},n});
+//# sourceMappingURL=polyfill.umd.js.map
+
+
+
+/*
+
+BABEL:
+
+
+let { h, render, Component } = preact; // import { ... } from 'preact';
+
+
+class App extends Component {
+  state = {
+    text: "Hello!"
+  };
+
+  render({}, { text }) {
+    return (
+      <app>
+        <input
+          type="text"
+          placeholder="Enter text..."
+          value={text}
+          onInput={this.linkState("text")}
+        />
+        <main>
+          <Result text={text} />
+        </main>
+      </app>
+    );
+  }
+}
+
+class Result extends Component {
+  render({ text }) {
+    return <h1>{text}</h1>;
+  }
+}
+
+render(<App />, document.body);
+
+
+
+*/
