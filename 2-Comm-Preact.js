@@ -670,7 +670,7 @@
 
 
 
-/*----------------------------------DOESN'T WORK W:/O IT :)---------------*/
+/*----------------------------------DOESN'T WORK W:/O IT :)--------------------------------*/
 !((t, e) => {
 "object"==typeof exports&&"undefined"!=typeof module?module.exports=e(require("preact")):"function"==typeof define&&define.amd?define(["preact"],e):t.linkState=e(t.preact)})(this,t => { 
     
