@@ -675,9 +675,7 @@
 
 /*
 let { h, render, Component } = preact; 
-// import { ... } from 'preact';
-/** @jsx h */
-/*
+
 class App extends Component {
   state = {
     text: "Hello!"
