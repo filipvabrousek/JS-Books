@@ -676,11 +676,13 @@
 /*
 let { h, render, Component } = preact; 
 
+/** @jsx h */
+
+/*
 class App extends Component {
   state = {
     text: "Hello!"
   };
-
   render({}, { text }) {
     return (
       <app>
@@ -697,13 +699,11 @@ class App extends Component {
     );
   }
 }
-
 class Result extends Component {
   render({ text }) {
     return <h1>{text}</h1>;
   }
 }
-
 render(<App />, document.body);
 
 
