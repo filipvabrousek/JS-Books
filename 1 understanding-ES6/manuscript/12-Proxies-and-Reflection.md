@@ -38,7 +38,7 @@ Proxies allow you to intercept low-level object operations on the target that ar
 
 The reflection API, represented by the `Reflect` object, is a collection of methods that provide the default behavior for the same low-level operations that proxies can override. There is a `Reflect` method for every proxy trap. Those methods have the same name and are passed the same arguments as their respective proxy traps. Table 11-1 summarizes this behavior.
 
-{title="Table 11-1: Proxy traps in JavaScript"}
+
 | Proxy Trap               | Overrides the Behavior Of | Default Behavior |
 |--------------------------|---------------------------|------------------|
 |`get`                     | Reading a property value  | `Reflect.get()` |
@@ -54,6 +54,7 @@ The reflection API, represented by the `Reflect` object, is a collection of meth
 |`ownKeys`                 | `Object.keys`, `Object.getOwnPropertyNames()`, `Object.getOwnPropertySymbols()` | `Reflect.ownKeys()` |
 |`apply`                   | Calling a function | `Reflect.apply()` |
 |`construct`               | Calling a function with `new` | `Reflect.construct()` |
+
 
 Each trap overrides some built-in behavior of JavaScript objects, allowing you to intercept and modify the behavior. If you still need to use the built-in behavior, then you can use the corresponding reflection API method. The relationship between proxies and the reflection API becomes clear when you start creating proxies, so it's best to dive in and look at some examples.
 
